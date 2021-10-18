@@ -1,3 +1,6 @@
+.error {
+	background-color: red;
+}
 body {
 	font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
@@ -25,6 +28,16 @@ nav {
 	margin-top: -1px;
 }
 
+nav li {
+	list-style-type: square;
+}
+
+nav ul    {
+	margin: 2;
+	padding: 2;
+	list-style-type: square;
+}
+
 main {
 	background-color: #aaa;
 	margin-top: -1px;
@@ -41,10 +54,6 @@ table, tr, th, td{
 
 td th{
 	height: 50px;
-}
-nav ul    {
-	margin: 0;
-	padding: 0;
 }
 
 nav ul li {
