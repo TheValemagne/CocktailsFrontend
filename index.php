@@ -1,8 +1,19 @@
-<?php
+<?php // inclusion des verifications
 session_start();
 
-include("Donnees.inc.php");
-include("verification/inscription.php");
+// base de donnée
+include("Donnees.inc.php"); // la base de donnée avec les recettes et ingrédiants
+
+// verifications
+include("verification/deconnection.inc.php"); // gestion de la déconnection d'un compte
+include("verification/connection.inc.php"); // gestion de la connection à un compte existant
+include("verification/formulaire.inc.php"); // vérification du formulaire d'inscription / modification compte
+
+// fonctions
+include("fonction/fonctions.inc.php"); // fichier de définition des fonctions
+
+$pages_authentifie = array("acceuil", "monProfil", "navigation", "recettes");
+$pages_non_authentifie = array("acceuil", "inscription", "navigation", "recettes");
 ?>
 <!DOCTYPE html>
 
@@ -26,35 +37,43 @@ include("verification/inscription.php");
           </form>
         </li>
         <li>
-<?php // zone de connection
-if(isset($_SESSION["user"]) && isset($_SESSION["password"])) {
-          echo $_SESSION["user"].'\n <a href="index.php?page=monProfil">Mon compte</a>\n';
-} else { ?>
-          <form action="#" method="post">
-            <input type="text" name="user" value="<?php isset($_POST["user"]) ? $_POST['user'] : ""; ?>" />
-            <input type="password" name="password" value="<?php isset($_POST["password"]) ? $_POST['password'] : ""; ?>" />
-            <input type="submit" value="Se connecter" name="connection" />
-            <a href="index.php?page=inscription">s'inscrire</a>
-          </form>
-<?php } ?>
-        </li>
+          <?php if($authentifie) { ?><ul>
+            <li><?php
+            if(isset($_SESSION["nom"]) && isset($_SESSION["prenom"]) ){ // client connecte avec nom et prenom connus
+              echo $_SESSION["nom"]." ".$_SESSION["prenom"];
+            } else if(isset($_SESSION["login"])){ // sinon afficher le login
+              echo $_SESSION["login"];
+            } ?></li>
+            <li><a href="index.php?page=monProfil">Mon compte</a></li>
+            <li>
+              <form action="#" method="post">
+                <input type="submit" name="deconnection" value="Se déconnecter" />
+              </form>
+              <div id="erreur_connection"></div>
+            </li>
+          </ul>
+        <?php } else { ?><form action="#" method="post">
+          <input type="text" name="login" value="<?php isset($_POST["login"]) ? $_POST['login'] : ""; ?>" />
+          <input type="password" name="password" value="<?php isset($_POST["password"]) ? $_POST['password'] : ""; ?>" />
+          <input type="submit" value="Se connecter" name="connection" />
+          <a href="index.php?page=inscription">s'inscrire</a>
+        </form>
+      <?php } ?></li>
       </ul>
   	</header>
 
 <?php
-  //TODO include tous les types de pages
+  // TODO: système pour les vues détaillées des recettes -> index.php?page=recette&recette={nom_recette} ?
   if(isset($_GET["page"])) {
-
-    $fichier = "page/".$_GET["page"].".php";
-
-    if(file_exists($fichier)) {
-      include($fichier);
-    } else {
+    if($authentifie && in_array($_GET["page"], $pages_authentifie) ){ // utilisateur connecté
+      include("page/".$_GET["page"].".php");
+    } else if(!$authentifie && in_array($_GET["page"], $pages_non_authentifie) ){ // utilisateur non connecté
+      include("page/".$_GET["page"].".php");
+    } else { // page inexistante ou interdite
       include("page/404.html");
     }
-
-  } else {
-    echo "index";
+  } else { // page d'acceuil par défaux
+    include("page/acceuil.html");
   }
 ?>
 
