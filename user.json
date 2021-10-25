@@ -1,0 +1,17 @@
+{
+    "admin": {
+        "password": "admin"
+    },
+    "jb007": {
+        "password": "12345",
+        "nom": "Bond",
+        "prenom": "James",
+        "sexe": "h",
+        "naissance": "1963-01-27",
+        "telephone": "0606560604",
+        "code_postal": "57200",
+        "ville": "Sarreguemines",
+        "mail": "james.bond@gmail.com",
+        "adresse": "1 rue des Fleures"
+    }
+}
