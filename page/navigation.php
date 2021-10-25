@@ -1,15 +1,8 @@
 <?php
   $fil = array();
-  function alimentToUrl($input){
-    return str_replace(" ", "_", $input);
-  }
-
-  function urlToAliment($input){
-    return str_replace("_", " ", $input);
-  }
 
   if(isset($_GET["aliment"])) {
-    $aliment = urlToAliment($_GET["aliment"]);
+    $aliment = urlToStr($_GET["aliment"]);
   } else {
     $aliment = "Aliment";
   }
@@ -32,7 +25,7 @@
             if($index > 0){
               echo "\t\t";
             }
-            echo "<li><a href=\"index.php?page=navigation&aliment=".alimentToUrl($sous_gategorie)."\">$sous_gategorie</a></li>\n";
+            echo "<li><a href=\"index.php?page=navigation&aliment=".strToUrl($sous_gategorie)."\">$sous_gategorie</a></li>\n";
             $index++;
           }
         ?>
