@@ -12,7 +12,7 @@ if(isset($_POST["inscription"]) ){ // vérification du formulaire d'inscription
     array_push($erreurs_inscription, "login");
   }
 
-  if(isset($utilisateurs_enregistrees[$_POST["login"]]) && !in_array($erreurs_inscription, "login")) {
+  if(isset($utilisateurs_enregistrees[$_POST["login"]]) && !in_array("login", $erreurs_inscription)) {
     array_push($erreurs_inscription, "login");
   }
 
