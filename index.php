@@ -63,7 +63,6 @@ $pages_non_authentifie = array("acceuil", "inscription", "navigation", "recette"
   	</header>
 
 <?php
-  // TODO: système pour les vues détaillées des recettes -> index.php?page=recette&recette={nom_recette} ?
   if(isset($_GET["page"])) {
     if($authentifie && in_array($_GET["page"], $pages_authentifie) ){ // utilisateur connecté
       include("page/".$_GET["page"].".php");

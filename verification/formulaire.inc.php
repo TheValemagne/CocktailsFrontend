@@ -13,6 +13,7 @@ if(isset($_POST["inscription"]) ){ // vérification du formulaire d'inscription
   }
 
   if(isset($utilisateurs_enregistrees[$_POST["login"]]) && !in_array("login", $erreurs_inscription)) {
+    // login existe déjà dans la base de donnée
     array_push($erreurs_inscription, "login");
   }
 
