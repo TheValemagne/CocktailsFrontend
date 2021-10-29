@@ -12,8 +12,8 @@ include("verification/formulaire.inc.php"); // vérification du formulaire d'ins
 // fonctions
 include("fonction/fonctions.inc.php"); // fichier de définition des fonctions
 
-$pages_authentifie = array("acceuil", "monProfil", "navigation", "recettes");
-$pages_non_authentifie = array("acceuil", "inscription", "navigation", "recettes");
+$pages_authentifie = array("acceuil", "monProfil", "navigation", "recette", "recettes");
+$pages_non_authentifie = array("acceuil", "inscription", "navigation", "recette", "recettes");
 ?>
 <!DOCTYPE html>
 
@@ -21,7 +21,7 @@ $pages_non_authentifie = array("acceuil", "inscription", "navigation", "recettes
 
   <head>
     <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
-  	<title>Cocktails</title>
+  	<title>Cocktails <?php echo isset($_GET["page"]) ? $_GET["page"] : "" ?></title>
   	<meta charset="utf-8" />
   </head>
 
@@ -38,7 +38,7 @@ $pages_non_authentifie = array("acceuil", "inscription", "navigation", "recettes
         </li>
         <li>
           <?php if($authentifie) { ?><ul>
-            <li><?php
+            <li><?php // TODO: erreur de connection
             if(isset($_SESSION["nom"]) && isset($_SESSION["prenom"]) ){ // client connecte avec nom et prenom connus
               echo $_SESSION["nom"]." ".$_SESSION["prenom"];
             } else if(isset($_SESSION["login"])){ // sinon afficher le login
@@ -46,10 +46,9 @@ $pages_non_authentifie = array("acceuil", "inscription", "navigation", "recettes
             } ?></li>
             <li><a href="index.php?page=monProfil">Mon compte</a></li>
             <li>
-              <form action="#" method="post">
+              <form action="#" method="post" name="login">
                 <input type="submit" name="deconnection" value="Se déconnecter" />
               </form>
-              <div id="erreur_connection"></div>
             </li>
           </ul>
         <?php } else { ?><form action="#" method="post">
@@ -58,6 +57,7 @@ $pages_non_authentifie = array("acceuil", "inscription", "navigation", "recettes
           <input type="submit" value="Se connecter" name="connection" />
           <a href="index.php?page=inscription">s'inscrire</a>
         </form>
+        <div id="erreur_connection"></div>
       <?php } ?></li>
       </ul>
   	</header>
