@@ -13,8 +13,10 @@ if(isset($_POST["connection"])){ // demande de connection à un compte client
           $_SESSION[$donnee_utilisateur] = $contenue_donnee;
         }
 
-        header("Location: ./index.php"); // redirection vers la page d'acceuil
-        exit;
+        if(isset($_GET["page"]) && $_GET["page"] == "inscription"){ // page d'inscription est interdite pour un client authentifié
+          header("Location: ./index.php"); // redirection vers la page d'acceuil
+          exit;
+        }
       }
   }
 }
