@@ -17,7 +17,7 @@
           $sous_gategories = $Hierarchie[$aliment]["sous-categorie"];
           $index = 0;
 
-          foreach ($sous_gategories as $index => $sous_gategorie){
+          foreach ($sous_gategories as $sous_gategorie){
             if($index > 0){
               echo "\t\t";
             }
@@ -26,8 +26,7 @@
           }
         ?>
       </ul>
-      <?php } ?>
-    </nav>
+    <?php } ?></nav>
 
     <main>
       <p>
