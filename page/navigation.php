@@ -1,11 +1,7 @@
 <?php
   $fil = array();
-
-  if(isset($_GET["aliment"])) {
-    $aliment = urlToStr($_GET["aliment"]);
-  } else {
-    $aliment = "Aliment";
-  }
+  $aliment = isset($_GET["aliment"]) ? urlToStr($_GET["aliment"]) :  "Aliment";
+  // TODO: page aliemnt inexistant
 ?>
     <nav>
       Aliment courant
@@ -13,7 +9,7 @@
       <a href="index.php?page=navigation">Aliment</a>
       <br />
 
-      <?php if(isset($Hierarchie[$aliment]) && isset($Hierarchie[$aliment]["sous-categorie"])){ ?>
+      <?php if(isset($Hierarchie[$aliment]["sous-categorie"])){ ?>
 
       Sous-catégories :
       <ul>
@@ -25,7 +21,7 @@
             if($index > 0){
               echo "\t\t";
             }
-            echo "<li><a href=\"index.php?page=navigation&aliment=".strToUrl($sous_gategorie)."\">$sous_gategorie</a></li>\n";
+            echo '<li><a href="index.php?page=navigation&aliment='.strToUrl($sous_gategorie).'">'.$sous_gategorie."</a></li>\n";
             $index++;
           }
         ?>
@@ -37,16 +33,24 @@
       <p>
         Liste des cocktails
       </p>
+
       <ul>
-        <?php //TODO filtrer les recettes avec une fonction
+        <?php
         $index = 0;
 
         foreach ($Recettes as $recette) {
-          if($index > 0){
-            echo "\t\t";
+          if(sizeof(array_intersect(getIngredientsList($aliment, $Hierarchie), $recette['index'])) > 0){ // filtre les recetes contenant l'aliment selectionné
+            if($index > 0){ // indentation du code
+              echo "\t\t";
+            }
+
+            $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
+            // TODO: transformer les liens en cartes cocktails
+            echo '<li><a href="index.php?page=recette&recette='.$indice_recette.'">'.$recette["titre"]."</a></li>\n";
+            $index++;
           }
-          echo "<li>".$recette["titre"]."</li>\n";
-          $index++;
-        } ?>
+        }
+        ?>
       </ul>
+
     </main>
