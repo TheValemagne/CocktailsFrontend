@@ -12,6 +12,10 @@
         "code_postal": "57200",
         "ville": "Sarreguemines",
         "mail": "james.bond@gmail.com",
-        "adresse": "1 rue des Fleures"
+        "adresse": "1 rue des Fleures",
+        "recettes": [
+          "0",
+          "85"
+        ]
     }
 }
