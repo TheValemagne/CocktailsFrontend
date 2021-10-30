@@ -5,9 +5,7 @@
 <?php } else { // la recette existante dans la base de donnée ?>
       <h1><?php echo $Recettes[$_GET["recette"]]['titre'] ?></h1>
 
-      <?php // TODO: ajouter le coeur pour favorie ou non ?>
       <img alt="<?php echo 'image recette n°'.$_GET["recette"] ?>" src="<?php echo getImageSrc($Recettes[$_GET["recette"]]['titre']) ?>">
-
 
       <h2>préparation :</h2>
 
@@ -16,7 +14,7 @@
       <h2>Ingrédients :</h2>
 
       <ul>
-        <?php // liste des ingrédients avec détail
+        <?php // liste des ingrédients avec détail // TODO: ajouter le coeur pour favorie ou non
         $index = 0;
 
         foreach (preg_split('#\|#', $Recettes[$_GET["recette"]]['ingredients']) as $ingredient) {
