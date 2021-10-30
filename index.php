@@ -5,15 +5,15 @@ session_start();
 include("Donnees.inc.php"); // la base de donnée avec les recettes et ingrédiants
 
 // verifications
-include("verification/deconnection.inc.php"); // gestion de la déconnection d'un compte
-include("verification/connection.inc.php"); // gestion de la connection à un compte existant
-include("verification/formulaire.inc.php"); // vérification du formulaire d'inscription / modification compte
+include("Verifications/deconnection.inc.php"); // gestion de la déconnection d'un compte
+include("Verifications/connection.inc.php"); // gestion de la connection à un compte existant
+include("Verifications/formulaire.inc.php"); // vérification du formulaire d'inscription / modification compte
 
 // fonctions
-include("fonction/fonctions.inc.php"); // fichier de définition des fonctions
+include("Fonctions/fonctions.inc.php"); // fichier de définition des fonctions
 
-$pages_authentifie = array("acceuil", "monProfil", "navigation", "recette", "recettes");
-$pages_non_authentifie = array("acceuil", "inscription", "navigation", "recette", "recettes");
+$pages_authentifie = array("acceuil", "monProfil", "navigation", "recette", "recettes", "recherche");
+$pages_non_authentifie = array("acceuil", "inscription", "navigation", "recette", "recettes", "recherche");
 ?>
 <!DOCTYPE html>
 
@@ -31,7 +31,7 @@ $pages_non_authentifie = array("acceuil", "inscription", "navigation", "recette"
         <li><a href="index.php?page=navigation">Navigation</a></li>
         <li><a href="index.php?page=recettes">Recettes</a></li>
         <li>
-          <form action="#" method="post">
+          <form action="index.php?page=recherche" method="post">
             Recherche : <input type="text" value="<?php isset($_POST["requette"]) ? $_POST["requette"] : "" ; ?>" name="requette"/>
             <input type="submit" value="Rechercher" name="rechercher"/>
           </form>
@@ -65,14 +65,14 @@ $pages_non_authentifie = array("acceuil", "inscription", "navigation", "recette"
 <?php
   if(isset($_GET["page"])) {
     if($authentifie && in_array($_GET["page"], $pages_authentifie) ){ // utilisateur connecté
-      include("page/".$_GET["page"].".php");
+      include("Pages/".$_GET["page"].".php");
     } else if(!$authentifie && in_array($_GET["page"], $pages_non_authentifie) ){ // utilisateur non connecté
-      include("page/".$_GET["page"].".php");
+      include("Pages/".$_GET["page"].".php");
     } else { // page inexistante ou interdite
-      include("page/404.html");
+      include("Pages/404.html");
     }
   } else { // page d'acceuil par défaux
-    include("page/acceuil.html");
+    include("Pages/acceuil.html");
   }
 ?>
 

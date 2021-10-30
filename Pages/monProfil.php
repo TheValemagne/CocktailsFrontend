@@ -11,7 +11,7 @@
     }
   }
 
-  include("page/formulaire.php");
+  include("Pages/formulaire.inc.php");
 ?>
         <input type="submit" name="modifier" value="modifier" />
 
@@ -43,5 +43,6 @@
         ksort($donnee_utilisateurs);
         file_put_contents("user.json", json_encode($donnee_utilisateurs, JSON_PRETTY_PRINT)); // formater pour plus de lisibilité
       ?>
+    <?php } ?>
 
-    <?php } ?></main>
+    </main>

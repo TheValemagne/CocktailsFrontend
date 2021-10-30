@@ -16,7 +16,7 @@
 <?php
   // TODO: modifier la class error pour mettre en rouge les bordures ou un effet meilleur qu'un backgroud: red
   // TODO: focus d'un input avec une couleur grise + inputs alignés
-  include("page/formulaire.php");
+  include("Pages/formulaire.inc.php");
 ?>
         <input type="submit" name="inscription" value="S'inscrire" />
 
@@ -53,5 +53,5 @@
           }
         ?>
       </ul><?php } ?>
-
+      
     </main>
