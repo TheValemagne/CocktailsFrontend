@@ -31,7 +31,7 @@
 
         foreach ($donnee_utilisateurs[$_SESSION["login"]] as $donnee_utilisateur => $contenue_donnee) {
           // une donnée a été supprimer par l'utilisateur
-          if($donnee_utilisateur != "password" && (!isset($_POST[$donnee_utilisateur]) || empty($_POST[$donnee_utilisateur])) ){
+          if(!in_array($donnee_utilisateur, array("password", "recettes")) && (!isset($_POST[$donnee_utilisateur]) || empty($_POST[$donnee_utilisateur])) ){
             unset($donnee_utilisateurs[$_SESSION["login"]][$donnee_utilisateur]);
 
             if(isset($_SESSION[$donnee_utilisateur])){
