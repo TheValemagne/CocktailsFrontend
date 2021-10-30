@@ -18,6 +18,8 @@ if(isset($_POST["connection"])){ // demande de connection à un compte client
           exit;
         }
       }
+
+      // TODO: inclure la liste de recettes préférées avant connection
   }
 }
 

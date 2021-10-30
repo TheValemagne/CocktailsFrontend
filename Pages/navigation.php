@@ -36,9 +36,10 @@
       <ul>
         <?php
         $index = 0;
+        $liste_ingredients = getIngredientsList($aliment, $Hierarchie);
 
         foreach ($Recettes as $recette) {
-          if(sizeof(array_intersect(getIngredientsList($aliment, $Hierarchie), $recette['index'])) > 0){ // filtre les recetes contenant l'aliment selectionné
+          if(sizeof(array_intersect($liste_ingredients, $recette['index'])) > 0){ // filtre les recetes contenant l'aliment selectionné
             if($index > 0){ // indentation du code
               echo "\t\t";
             }

@@ -23,21 +23,22 @@ function getImageSrc($titre_cocktail){
 
 // retourne une liste avec tous les ingrédients de la catégorie correspondante
 function getIngredientsList($ingredient, $Hierarchie){
-  $ingredient_list = array();
+  $liste_ingredients = array($ingredient);
 
   if(!isset($Hierarchie[$ingredient])){
-    return $ingredient_list;
+    return $liste_ingredients;
   }
 
   if(isset($Hierarchie[$ingredient]['sous-categorie']) ){
     foreach ($Hierarchie[$ingredient]['sous-categorie'] as $sous_gategorie) {
-      $ingredient_list = array_merge($ingredient_list, getIngredientsList($sous_gategorie, $Hierarchie));
+      array_push($liste_ingredients, $sous_gategorie);
+      $liste_ingredients = array_merge($liste_ingredients, getIngredientsList($sous_gategorie, $Hierarchie));
     }
   } else {
-    array_push($ingredient_list, $ingredient);
+    array_push($liste_ingredients, $ingredient);
   }
 
-  return $ingredient_list;
+  return array_unique($liste_ingredients);
 }
 
 ?>
