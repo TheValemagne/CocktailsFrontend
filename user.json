@@ -10,14 +10,14 @@
         "naissance": "1963-01-27",
         "telephone": "0606560604",
         "code_postal": "57200",
-        "ville": "Sarreguemines",
+        "ville": "Metz",
         "mail": "james.bond@gmail.com",
         "adresse": "1 rue des Fleures",
         "recettes": [
-          "0",
-          "7",
-          "90",
-          "105"
+            "0",
+            "7",
+            "90",
+            "105"
         ]
     }
 }

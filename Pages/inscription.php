@@ -37,6 +37,10 @@
           $donnee_utilisateurs[$_POST["login"]][$donnee] = trim($_POST[$donnee]);
         }
 
+        if(isset($_SESSION["recettes"])){ // intègre les recettes préférées ajoutées avant l'inscription
+            $donnee_utilisateurs[$_POST["login"]]["recettes"] = $_SESSION["recettes"];
+        }
+
         ksort($donnee_utilisateurs);
         file_put_contents("user.json", json_encode($donnee_utilisateurs, JSON_PRETTY_PRINT));
       ?>
@@ -48,10 +52,16 @@
 
       <ul>
         <?php
-          foreach ($erreurs_inscription as $champ) {
+          $index = 0;
+
+          foreach ($erreurs_messages as $champ) { // affichage des messages d'erreurs à l'utilisateur
+            if($index > 0){ // indentation du code
+              echo "\t\t";
+            }
             echo "<li>$champ</li>\n";
+            $index++;
           }
         ?>
       </ul><?php } ?>
-      
+
     </main>

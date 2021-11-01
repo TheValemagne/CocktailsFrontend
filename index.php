@@ -71,7 +71,7 @@ $pages_non_authentifie = array("acceuil", "inscription", "navigation", "recette"
     } else { // page inexistante ou interdite
       include("Pages/404.html");
     }
-  } else { // page d'acceuil par défaux
+  } else { // page d'acceuil par défaut
     include("Pages/acceuil.html");
   }
 ?>

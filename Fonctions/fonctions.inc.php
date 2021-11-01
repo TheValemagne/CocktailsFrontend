@@ -10,6 +10,16 @@ function urlToStr($input){
   return str_replace("_", " ", $input);
 }
 
+// transforme le fil d'Ariane de type chaine de caractère en tableau
+function getFilAliments($fil_aliments){
+  return preg_split('#-#', $fil_aliments);
+}
+
+// définie le fil d'Ariane en fonction du tableau donné en entrée
+function setFilAliments($tableau_aliments){
+  return implode("-", $tableau_aliments);
+}
+
 // retourne le nom de l'image correspondant au titre du cocktail ou l'image par défaux si aucune image est assocssiée au cocktail
 function getImageSrc($titre_cocktail){
   $search =  array('é', 'è', 'ä', 'â', "ç", "ï", "î", "û", "ü", "ñ", "-", "'");
