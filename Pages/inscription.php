@@ -1,31 +1,12 @@
     <main>
       <h1>Formulaire d'inscription</h1>
 
-      <?php if(sizeof($erreurs_inscription) > 0 || !isset($_POST["inscription"])) { ?><form action="#" method="post">
+<?php if(sizeof($erreurs_inscription) > 0 || !isset($_POST["inscription"])) {
+    // TODO: modifier la class error pour mettre en rouge les bordures ou un effet meilleur qu'un backgroud: red
+    // TODO: focus d'un input avec une couleur grise + inputs alignés
+    include("Pages/formulaire.inc.php");
 
-        <fieldset>
-          <legend>Connexion</legend>
-          <label for="login">Login :</label>
-            <input type="text" <?php if(in_array("login", $erreurs_inscription)) { echo 'class="error"'; } ?> name="login" id="login" value="<?php if(isset($_POST["login"])) {echo $_POST["login"]; }; ?>"  required="required" /> *
-          <br />
-          <label for="password">Mot de passe :</label>
-            <input type="password" <?php if(in_array("password",$erreurs_inscription)) { echo 'class="error"'; } ?> name="password" id="password" value="<?php if(isset($_POST["password"])) { echo $_POST["password"]; }; ?>" required="required" /> *
-          <br />
-        </fieldset>
-
-<?php
-  // TODO: modifier la class error pour mettre en rouge les bordures ou un effet meilleur qu'un backgroud: red
-  // TODO: focus d'un input avec une couleur grise + inputs alignés
-  include("Pages/formulaire.inc.php");
-?>
-        <input type="submit" name="inscription" value="S'inscrire" />
-
-      </form>
-
-      <p>
-        Les champs marqués avec un * sont obligatoires.
-      </p>
-    <?php } else { // inscription réussie ?>
+} else { // inscription réussie ?>
       <p>
         Félicitation, vous vous êtes bien inscrit!
       </p>

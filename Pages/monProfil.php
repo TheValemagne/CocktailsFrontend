@@ -1,8 +1,6 @@
     <main>
       <h1>Mon compte</h1>
 
-      <form action="#" method="post">
-
 <?php
   if(isset($_SESSION["login"]) && !isset($_POST["modifier"])){
     // remplie le formulaire avec les informations actuelles du client enregistrée dans la base de donnée lors du premier chargement
@@ -12,12 +10,9 @@
   }
 
   include("Pages/formulaire.inc.php");
-?>
-        <input type="submit" name="modifier" value="modifier" />
 
-      </form>
-
-      <?php if(sizeof($erreurs_inscription) == 0 && sizeof($donnees_valides) > 0 && isset($_POST["modifier"])) { ?><p>
+if(sizeof($erreurs_inscription) == 0 && sizeof($donnees_valides) > 0 && isset($_POST["modifier"])) { ?>
+      <p>
         Données enregistrées!
       </p>
       <?php // ouverture de la base de donnée user.json
@@ -30,7 +25,7 @@
         }
 
         foreach ($donnee_utilisateurs[$_SESSION["login"]] as $donnee_utilisateur => $contenue_donnee) {
-          // une donnée a été supprimer par l'utilisateur
+          // une donnée a été supprimer par l'utilisateur. L'utilisateur ne peut pas supprimer le mot de passe ou la liste de recettes.
           if(!in_array($donnee_utilisateur, array("password", "recettes")) && (!isset($_POST[$donnee_utilisateur]) || empty($_POST[$donnee_utilisateur])) ){
             unset($donnee_utilisateurs[$_SESSION["login"]][$donnee_utilisateur]);
 

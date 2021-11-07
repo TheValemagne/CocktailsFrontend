@@ -19,18 +19,19 @@ if(isset($_POST["inscription"]) ){ // vérification du formulaire d'inscription
     array_push($erreurs_inscription, "login");
     array_push($erreurs_messages, "Le login existe déjà.");
   }
+}
 
+if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification du formulaire d'inscription et de modification de profil
+
+  // champs obligatoires :
   if(!isset($_POST["password"]) || empty($_POST["password"]) ){
     array_push($erreurs_inscription, "password");
     array_push($erreurs_messages, "Le mot de passe est invalide.");
   } else if(isset($_POST["password"]) && !empty($_POST["password"])){
     array_push($donnees_valides, "password");
   }
-}
 
-// champs optionels :
-if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification du formulaire d'inscription et de modification de profil
-
+  // champs optionels :
   if(isset($_POST["nom"]) && !empty(trim($_POST["nom"])) ) {
     $nom = str_replace($search, $replace, strtolower(trim($_POST['nom'])));
 

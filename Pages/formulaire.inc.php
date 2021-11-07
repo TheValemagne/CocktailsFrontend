@@ -1,3 +1,26 @@
+<?php // changement de mise en forme en fonction de la page actuelle
+if(isset($_GET['page']) && $_GET['page'] == "inscription"){ // inscription, le login doit être saisie
+  $option = 'required="required"';
+  $nom_submit = "inscription";
+  $valeur_submit = "S'inscrire";
+} else if (isset($_GET['page']) && $_GET['page'] == "monProfil"){ // modification compte, le login ne peut pas être changé
+  $option = 'disabled="disabled"';
+  $nom_submit = "modifier";
+  $valeur_submit = "modifier";
+}
+?>
+      <form action="#" method="post">
+
+        <fieldset>
+          <legend>Connexion</legend>
+          <label for="login">Login :</label>
+            <input type="text" <?php if(in_array("login", $erreurs_inscription)) { echo 'class="error"'; } ?> name="login" id="login" value="<?php if(isset($_POST["login"])) {echo $_POST["login"]; }; ?>" <?php echo $option; ?> /> <?php echo ($option == 'required="required"') ? "*\n" : "\n" ?>
+          <br />
+          <label for="password">Mot de passe :</label>
+            <input type="password" <?php if(in_array("password",$erreurs_inscription)) { echo 'class="error"'; } ?> name="password" id="password" value="<?php if(isset($_POST["password"])) { echo $_POST["password"]; }; ?>" required="required" /> *
+          <br />
+        </fieldset>
+
         <fieldset>
           <legend>Informations personnelles</legend>
 
@@ -34,3 +57,11 @@
             <input type="text" <?php if(in_array("telephone", $erreurs_inscription)) { echo 'class="error"'; } ?> name="telephone" id="telephone" value="<?php if(isset($_POST['telephone'])) {echo $_POST['telephone']; }; ?>" />
         </fieldset>
         <br />
+
+        <input type="submit" name="<?php echo $nom_submit ?>" value="<?php echo $valeur_submit ?>" />
+
+      </form>
+
+      <p>
+        Les champs marqués avec un * sont obligatoires.
+      </p>

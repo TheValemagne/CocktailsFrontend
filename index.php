@@ -57,7 +57,8 @@ $pages_non_authentifie = array("acceuil", "inscription", "navigation", "recette"
           <input type="submit" value="Se connecter" name="connection" />
           <a href="index.php?page=inscription">s'inscrire</a>
         </form>
-        <div id="erreur_connection"></div>
+        
+        <div id="erreur_connection"><?php echo (isset($_POST['connection']) && !$authentifie) ? "Login ou mot de passe invalide" : ""; ?></div>
       <?php } ?></li>
       </ul>
   	</header>
