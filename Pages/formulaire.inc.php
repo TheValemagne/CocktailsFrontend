@@ -15,7 +15,8 @@ if(isset($_GET['page']) && $_GET['page'] == "inscription"){ // inscription, le l
           <legend>Connexion</legend>
           <label for="login">Login :</label>
             <input type="text" <?php if(in_array("login", $erreurs_inscription)) { echo 'class="error"'; } ?> name="login" id="login" value="<?php if(isset($_POST["login"])) {echo $_POST["login"]; }; ?>" <?php echo $option; ?> /> <?php echo ($option == 'required="required"') ? "*\n" : "\n" ?>
-          <br />
+            <?php if(isset($_GET['page']) && $_GET['page'] == "monProfil") { // récupérer le login quand il est disable ?><input type="text" name="login" id="login" value="<?php if(isset($_POST["login"])) {echo $_POST["login"]; }; ?>" hidden="hidden" />
+          <?php } ?><br />
           <label for="password">Mot de passe :</label>
             <input type="password" <?php if(in_array("password",$erreurs_inscription)) { echo 'class="error"'; } ?> name="password" id="password" value="<?php if(isset($_POST["password"])) { echo $_POST["password"]; }; ?>" required="required" /> *
           <br />
