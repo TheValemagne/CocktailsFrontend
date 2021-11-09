@@ -9,6 +9,10 @@
     }
   }
 
+  if(isset($_SESSION['login'])){ // enregistre le login pour chaque rechargement. Disable ne rcupère pas la value.
+    $_POST['login'] = $_SESSION['login'];
+  }
+
   include("Pages/formulaire.inc.php");
 
 if(sizeof($erreurs_inscription) == 0 && sizeof($donnees_valides) > 0 && isset($_POST["modifier"])) { ?>
