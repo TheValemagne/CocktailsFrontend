@@ -13,8 +13,8 @@ include("Verifications/validationProfil.php"); // met à jour la base de donnée
 // fonctions
 include("Fonctions/fonctions.inc.php"); // fichier de définition des fonctions
 
-$pages_authentifie = array("acceuil", "monProfil", "navigation", "recette", "recettes", "recherche");
-$pages_non_authentifie = array("acceuil", "inscription", "navigation", "recette", "recettes", "recherche");
+$pages_authentifie = array("accueil", "monProfil", "navigation", "recette", "recettes", "recherche");
+$pages_non_authentifie = array("accueil", "inscription", "navigation", "recette", "recettes", "recherche");
 ?>
 <!DOCTYPE html>
 
@@ -73,8 +73,8 @@ $pages_non_authentifie = array("acceuil", "inscription", "navigation", "recette"
     } else { // page inexistante ou interdite
       include("Pages/404.html");
     }
-  } else { // page d'acceuil par défaut
-    include("Pages/acceuil.html");
+  } else { // page d'accueil par défaut
+    include("Pages/accueil.php");
   }
 ?>
 
