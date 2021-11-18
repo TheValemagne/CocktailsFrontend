@@ -13,8 +13,8 @@ include("Verifications/validationProfil.php"); // met à jour la base de donnée
 // fonctions
 include("Fonctions/fonctions.inc.php"); // fichier de définition des fonctions
 
-$pages_authentifie = array("accueil", "monProfil", "navigation", "recette", "recettes", "recherche");
-$pages_non_authentifie = array("accueil", "inscription", "navigation", "recette", "recettes", "recherche");
+$pages_authentifie = array("monProfil", "navigation", "recette", "recettes", "recherche");
+$pages_non_authentifie = array("inscription", "navigation", "recette", "recettes", "recherche");
 ?>
 <!DOCTYPE html>
 
@@ -38,29 +38,8 @@ $pages_non_authentifie = array("accueil", "inscription", "navigation", "recette"
           </form>
         </li>
         <li>
-          <?php if($authentifie) { ?><ul>
-            <li><?php // TODO: erreur de connection
-            if(isset($_SESSION["nom"]) && isset($_SESSION["prenom"]) ){ // client connecte avec nom et prenom connus
-              echo $_SESSION["nom"]." ".$_SESSION["prenom"];
-            } else if(isset($_SESSION["login"])){ // sinon afficher le login
-              echo $_SESSION["login"];
-            } ?></li>
-            <li><a href="index.php?page=monProfil">Mon compte</a></li>
-            <li>
-              <form action="#" method="post" name="login">
-                <input type="submit" name="deconnection" value="Se déconnecter" />
-              </form>
-            </li>
-          </ul>
-        <?php } else { ?><form action="#" method="post">
-          <input type="text" name="login" value="<?php isset($_POST["login"]) ? $_POST['login'] : ""; ?>" />
-          <input type="password" name="password" value="<?php isset($_POST["password"]) ? $_POST['password'] : ""; ?>" />
-          <input type="submit" value="Se connecter" name="connection" />
-          <a href="index.php?page=inscription">s'inscrire</a>
-        </form>
-
-        <div id="erreur_connection"><?php echo (isset($_POST['connection']) && !$authentifie) ? "Login ou mot de passe invalide" : ""; ?></div>
-      <?php } ?></li>
+          <?php include("Pages/zoneConnection.inc.php"); ?>
+        </li>
       </ul>
   	</header>
 
@@ -74,7 +53,7 @@ $pages_non_authentifie = array("accueil", "inscription", "navigation", "recette"
       include("Pages/404.html");
     }
   } else { // page d'accueil par défaut
-    include("Pages/accueil.php");
+    include("Pages/navigation.php");
   }
 ?>
 
