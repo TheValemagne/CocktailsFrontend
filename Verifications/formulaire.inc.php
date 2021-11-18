@@ -9,7 +9,7 @@ $replace = array('e', 'e', 'a', 'a', "c", "i", "i", "u", "u",  "",  "",  "");
 if(isset($_POST["inscription"]) ){ // vérification du formulaire d'inscription
   $utilisateurs_enregistrees = json_decode(file_get_contents("user.json"), true); // base de données avec les logins enregistres
 
-  if(!isset($_POST["login"]) || empty($_POST["login"]) ){
+  if(!isset($_POST["login"]) || empty($_POST["login"]) || !ctype_alnum($_POST['login']) ){ // lettres non accentuées, minuscules ou majuscule et/ou chiffres
     array_push($erreurs_inscription, "login");
     array_push($erreurs_messages, "Le login est incorrect.");
   }
@@ -24,7 +24,7 @@ if(isset($_POST["inscription"]) ){ // vérification du formulaire d'inscription
 if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification du formulaire d'inscription et de modification de profil
 
   // champs obligatoires :
-  if(!isset($_POST["password"]) || empty($_POST["password"]) ){
+  if(!isset($_POST["password"]) || empty($_POST["password"]) ){ // auncune contrainte particulière
     array_push($erreurs_inscription, "password");
     array_push($erreurs_messages, "Le mot de passe est invalide.");
   } else if(isset($_POST["password"]) && !empty($_POST["password"])){
@@ -75,21 +75,28 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   if (isset($_POST["naissance"]) && !empty(trim($_POST["naissance"])) ) {
     $naissance = trim($_POST["naissance"]);
 
-    if(preg_match('#^([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})$#', $naissance) ){ // input type date non supporté
+    if(preg_match('#^([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})$#', $naissance) ){
       list($jour, $mois, $annee) = explode( "/", $naissance); // jj/mm/aaaa
-    } else if(preg_match('#^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})$#', $naissance)){
-      list($annee, $mois, $jour) = explode( "-", $naissance); // yyyy-mm-dd
     }
 
-    if(!isset($jour) || !isset($mois) || !isset($annee) || !checkdate($mois, $jour, $annee) || $annee > Date("Y") || ($jour > Date("d") && $mois >= Date("m") && $annee >= Date("Y")) ){
+    if(!isset($jour) || !isset($mois) || !isset($annee) || !checkdate($mois, $jour, $annee) || ($jour > Date("d") && $mois >= Date("m") && $annee >= Date("Y")) ){
       array_push($erreurs_inscription, "naissance");
       array_push($erreurs_messages, "La date de naissance est incorrecte.");
     } else {
       array_push($donnees_valides, "naissance");
     }
+
+    if(!in_array("naissance", $erreurs_inscription)){ // la date de naissance doit être antérieur de 18 ans à la date du jour
+      $date_18 = new DateTime((Date('Y') - 18).'-'.Date('m').'-'.Date('d')); // la date 18 ans en arrière
+
+      if( new DateTime($annee.'-'.$mois.'-'.$jour) > $date_18){ // le client est mineur
+        array_push($erreurs_inscription, "naissance");
+        array_push($erreurs_messages, "Vous devez être majeur pour vous inscrire.");
+      }
+    }
   }
 
-  if(isset($_POST["adresse"]) && !empty(trim($_POST["adresse"])) ){ // TODO ajouter des tests
+  if(isset($_POST["adresse"]) && !empty(trim($_POST["adresse"])) ){
     $adresse = str_replace($search, $replace, strtolower(trim($_POST["adresse"]))); // numéro + nom de rue
 
     if(strlen($adresse) < 5 || !preg_match('#^[0-9]+[a-z]+$#', $adresse)){ // longueur de rue inférieur à 5 ou pas composé d'un numéro suivie d'un nom de rue
@@ -103,7 +110,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   if(isset($_POST["code_postal"]) && !empty(trim($_POST["code_postal"])) ){
     $code_postal = trim($_POST["code_postal"]);
 
-    if(!preg_match('#^[0-9]{5}$#', $code_postal) ){ // 5 chiffres dans le code postal en France -> 57000
+    if(!preg_match('#^[0-9]{5}$#', $code_postal) ){ // 5 chiffres dans le code postal en France -> 57070
       array_push($erreurs_inscription, "code_postal");
       array_push($erreurs_messages, "Le code postal doit comporter exactement 5 chiffres.");
     } else {
@@ -123,11 +130,9 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   }
 
   if(isset($_POST["telephone"]) && !empty($_POST["telephone"]) ){
-    $telephone = filter_var($_POST["telephone"], FILTER_SANITIZE_NUMBER_INT);
-    $telephone = strpos($telephone, "+33") === 0 ? "0".substr($telephone, 3) : $telephone; // +33 6 ... ou 06 ... -> retourne 0...
-    $telephone = str_replace(array("+", "-", " "), array("", "", ""), $telephone); // enlève les espaces et tirets
+    $telephone = filter_var($_POST["telephone"], FILTER_SANITIZE_NUMBER_INT); // numéro limité aux numéros français standart : commence par 0 suivi de 9 chiffres
 
-    if(!ctype_digit($telephone) || strlen($telephone) != 10){
+    if(!ctype_digit($telephone) || strlen($telephone) != 10 || strpos($telephone, "0") != 0){
       array_push($erreurs_inscription, "telephone");
       array_push($erreurs_messages, "Le numéro de téléphone est incorrect.");
     } else {

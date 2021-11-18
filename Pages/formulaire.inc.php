@@ -42,7 +42,7 @@ if(isset($_GET['page']) && $_GET['page'] == "inscription"){ // inscription, le l
             <input type="text" <?php if(in_array("mail", $erreurs_inscription)) { echo 'class="error"'; } ?> name="mail" id="mail" value="<?php if(isset($_POST['mail'])) {echo $_POST['mail']; }; ?>" />
           <br />
           <label for="naissance">Date de naissance : </label>
-           <input type="date" <?php if(in_array("naissance", $erreurs_inscription)) { echo 'class="error"'; } ?> name="naissance" id="naissance" value="<?php if(isset($_POST['naissance'])) {echo $_POST['naissance']; }; ?>" /> (jj/mm/aaaa)
+           <input type="text" <?php if(in_array("naissance", $erreurs_inscription)) { echo 'class="error"'; } ?> name="naissance" id="naissance" value="<?php if(isset($_POST['naissance'])) {echo $_POST['naissance']; }; ?>" /> (jj/mm/aaaa)
           <br />
           <label for="adresse">Adresse : </label>
             <input type="text" <?php if(in_array("adresse", $erreurs_inscription)) { echo 'class="error"'; } ?> name="adresse" id="adresse" value="<?php if(isset($_POST['adresse'])) {echo $_POST['adresse']; }; ?>" />

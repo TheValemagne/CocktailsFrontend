@@ -6,6 +6,7 @@
         "password": "007",
         "nom": "James",
         "prenom": "Bond",
+        "naissance": "18\/11\/2003",
         "recettes": [
             "0",
             "7",

@@ -19,6 +19,23 @@ if(sizeof($erreurs_inscription) == 0 && sizeof($donnees_valides) > 0 && isset($_
       <p>
         Données enregistrées!
       </p>
-    <?php } ?>
+    <?php } else if(sizeof($erreurs_inscription) > 0) { // erreurs lors de la modification ?>
+      <p>
+        Veuillez compléter correctement les champs suivants :
+      </p>
+
+      <ul>
+        <?php
+          $index = 0;
+
+          foreach ($erreurs_messages as $champ) { // affichage des messages d'erreurs à l'utilisateur
+            if($index > 0){ // indentation du code
+              echo "\t\t";
+            }
+            echo "<li>$champ</li>\n";
+            $index++;
+          }
+        ?>
+      </ul><?php } ?>
 
     </main>
