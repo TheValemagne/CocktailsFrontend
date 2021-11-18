@@ -115,4 +115,62 @@ function filterMatches(array $matches): array
     return $result;
 }
 
+/**
+ * @return bool returns true if the item is in the ingredient hierarchy
+ */
+function findInData($item, $hierarchy)
+{
+    return in_array($item, array_keys($hierarchy));
+}
+
+/**
+ * @return array an array of recipes that satisfy at least one of the search criteria. Sorted by satisfaction score (in percent) in descending order
+ */
+function findRecipies($wanted, $unwanted, $hierarchy, $recipes)
+{
+    $recipesSatisfyCriteria = [];
+    foreach ($recipes as $recipe) {
+        $satisfaction = calculateRecipeSatisfaction($recipe, $hierarchy, $wanted, $unwanted);
+
+        if ($satisfaction > 0) {
+            $recipesSatisfyCriteria[] = [$satisfaction, $recipe];
+        }
+    }
+
+    krsort($recipesSatisfyCriteria);
+    return $recipesSatisfyCriteria;
+}
+
+/**
+ * @return float|int the satisfaction score in percent (0-100)
+ */
+function calculateRecipeSatisfaction($recipe, $hierarchy, $wanted, $unwanted)
+{
+    $satisfiedCriteria = 0;
+    $ingredients = $recipe['index'];
+    foreach ($wanted as $wantedIngredient) {
+        $completeWanted = getIngredientsList($wantedIngredient, $hierarchy);
+
+        foreach ($ingredients as $ingredient) {
+            if (in_array($ingredient, $completeWanted)) {
+                $satisfiedCriteria++;
+                break;
+            }
+        }
+    }
+
+    foreach ($unwanted as $unwantedIngredient) {
+        $completeUnwanted = getIngredientsList($unwantedIngredient, $hierarchy);
+
+        foreach ($ingredients as $ingredient) {
+            if (!in_array($ingredient, $completeUnwanted)) {
+                $satisfiedCriteria++;
+                break;
+            }
+        }
+    }
+
+    return (int)($satisfiedCriteria / (count($wanted) + count($unwanted)) * 100);
+}
+
 ?>
