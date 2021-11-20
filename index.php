@@ -5,7 +5,7 @@ session_start();
 include("Donnees.inc.php"); // la base de donnée avec les recettes et ingrédiants
 
 // verifications
-include("Verifications/deconnection.inc.php"); // gestion de la déconnection d'un compte
+include("Verifications/deconnexion.inc.php"); // gestion de la déconnexion d'un compte
 include("Verifications/connection.inc.php"); // gestion de la connection à un compte existant
 include("Verifications/formulaire.inc.php"); // vérification du formulaire d'inscription / modification compte
 include("Verifications/validationProfil.php"); // met à jour la base de données lors d'un changement du profil

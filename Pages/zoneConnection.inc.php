@@ -3,12 +3,13 @@
             if(isset($_SESSION["nom"]) && isset($_SESSION["prenom"]) ){ // client connecte avec nom et prenom connus
               echo $_SESSION["nom"]." ".$_SESSION["prenom"];
             } else if(isset($_SESSION["login"])){ // sinon afficher le login
-              echo $_SESSION["login"];
+              echo $_SESSION["login"]; // TODO vérifier déconnection
             } ?></li>
             <li><a href="index.php?page=monProfil">Profil</a></li>
             <li>
               <form action="#" method="post" name="login">
-                <input type="submit" name="deconnection" value="Déconnection" />
+                <input type="submit" name="deconnexion" value="Se déconnecter" />
+
               </form>
             </li>
           </ul>

@@ -14,7 +14,7 @@
               echo '<li><a href="index.php?page=recette&recette='.$indice_recette.'">'.$Recettes[$indice_recette]["titre"]."</a></li>\n";
               $index++;
             }
-          } else { ?><li>Auncune recette préférée pour l'instant</li>
+          } else { ?><li>Aucune recette préférée pour l'instant</li>
 <?php } ?>
       </ul>
 

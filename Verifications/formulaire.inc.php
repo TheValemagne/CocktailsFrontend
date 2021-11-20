@@ -65,7 +65,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
     $mail = str_replace($search, $replace, strtolower(trim($_POST['mail'])));
 
     if(!filter_var($_POST["mail"], FILTER_VALIDATE_EMAIL) ){
-      array_push($erreurs_inscription, "adresse mail");
+      array_push($erreurs_inscription, "mail");
       array_push($erreurs_messages, "Adresse email invalide.");
     } else {
       array_push($donnees_valides, "mail");

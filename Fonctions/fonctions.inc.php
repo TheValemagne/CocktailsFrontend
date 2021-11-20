@@ -137,6 +137,7 @@ function findRecipies($wanted, $unwanted, $hierarchy, $recipes)
         }
     }
 
+    // TODO trier par satisfaction
     krsort($recipesSatisfyCriteria);
     return $recipesSatisfyCriteria;
 }
