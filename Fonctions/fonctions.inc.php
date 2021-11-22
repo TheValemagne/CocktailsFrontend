@@ -56,6 +56,11 @@ function getIngredientsList($ingredient, $Hierarchie)
     return $liste_ingredients;
 }
 
+/**
+ * Splits the search string into the wanted and unwanted ingredients
+ * @return array ['contains'=> [ingredients], 'notContains'=>[ingredients]]
+ * @throws Exception if the search string is invalid
+ */
 function splitSearchString(string $search): array
 {
     if (empty($search)) {
@@ -89,6 +94,10 @@ function splitSearchString(string $search): array
     ];
 }
 
+/**
+ * helper method for splitting the search string into wanted and unwanted ingredients
+ * @return array|array[] ['contains'=> [ingredients], 'notContains'=>[ingredients]]
+ */
 function filterMatches(array $matches): array
 {
     $result = [
@@ -137,7 +146,6 @@ function findRecipies($wanted, $unwanted, $hierarchy, $recipes)
         }
     }
 
-    // TODO trier par satisfaction
     krsort($recipesSatisfyCriteria);
     return $recipesSatisfyCriteria;
 }
