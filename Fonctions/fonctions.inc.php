@@ -24,6 +24,31 @@ function setFilAliments($tableau_aliments)
     return implode("-", $tableau_aliments);
 }
 
+// vérifie que le fil d'Ariane soit valide
+function checkFilAliments($tableau_aliments, $hierarchie) {
+  if(sizeof($tableau_aliments) === 0) {
+    return true;
+  }
+
+  $super_categorie = urlToStr($tableau_aliments[0]);
+
+  if(!isset($hierarchie[$super_categorie])) {
+    return false;
+  }
+
+  for($i = 1; $i < (sizeof($tableau_aliments)); $i++) {
+    $sous_categorie = urlToStr($tableau_aliments[$i]);
+
+    if(!in_array($sous_categorie, $hierarchie[$super_categorie]["sous-categorie"])) {
+      return false;
+    }
+
+    $super_categorie = $sous_categorie;
+  }
+
+  return true;
+}
+
 // retourne le nom de l'image correspondant au titre du cocktail ou l'image par défaux si aucune image est assocssiée au cocktail
 function getImageSrc($titre_cocktail)
 {
@@ -180,6 +205,27 @@ function calculateRecipeSatisfaction($recipe, $hierarchy, $wanted, $unwanted)
     }
 
     return (int)($satisfiedCriteria / (count($wanted) + count($unwanted)) * 100);
+}
+
+function createCard($recette, $Recettes) {
+  $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
+  $image = getImageSrc($Recettes[$indice_recette]['titre']);
+
+  $format = '<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="'.$image.'" alt="Recette numéro '.$indice_recette.'">
+    <div class="card-body">
+      <h5 class="card-title"><a href="index.php?page=recette&recette='.$indice_recette.'">'.$recette["titre"].'</a></h5>
+      <ul>';
+
+  foreach($recette["index"] as $ingredient) {
+    $format.='<li>'.$ingredient.'</li>';
+  }
+
+  $format.='</ul>
+    </div>
+  </div>';
+
+  return $format;
 }
 
 ?>
