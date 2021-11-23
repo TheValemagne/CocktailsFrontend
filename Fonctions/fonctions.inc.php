@@ -207,23 +207,27 @@ function calculateRecipeSatisfaction($recipe, $hierarchy, $wanted, $unwanted)
     return (int)($satisfiedCriteria / (count($wanted) + count($unwanted)) * 100);
 }
 
-function createCard($recette, $Recettes) {
+// retourne la carte d'un coocktail.
+function creerCarte($recette, $Recettes) {
   $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
   $image = getImageSrc($Recettes[$indice_recette]['titre']);
 
-  $format = '<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="'.$image.'" alt="Recette numéro '.$indice_recette.'">
-    <div class="card-body">
-      <h5 class="card-title"><a href="index.php?page=recette&recette='.$indice_recette.'">'.$recette["titre"].'</a></h5>
-      <ul>';
+  $format = '
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="'.$image.'" alt="Recette numéro '.$indice_recette.'">
+          <div class="card-body">
+            <h5 class="card-title"><a href="index.php?page=recette&recette='.$indice_recette.'">'.$recette["titre"].'</a></h5>
+            <ul>';
 
   foreach($recette["index"] as $ingredient) {
-    $format.='<li>'.$ingredient.'</li>';
+    $format.="
+              <li>".$ingredient."</li>";
   }
 
-  $format.='</ul>
-    </div>
-  </div>';
+  $format.="
+            </ul>
+          </div>
+        </div>\n";
 
   return $format;
 }

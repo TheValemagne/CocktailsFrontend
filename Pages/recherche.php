@@ -38,9 +38,9 @@
             if (empty($wanted) && empty($unwanted)) {
                 echo "<p>Problème dans votre requête : recherche impossible</p>";
             } else {
-                $recipes = findRecipies($wanted, $unwanted, $Hierarchie, $Recettes);
+                $recettes = findRecipies($wanted, $unwanted, $Hierarchie, $Recettes);
 
-                print_r($recipes); // todo replace with bootstrap card function
+                print_r($recettes); // todo replace with bootstrap card function
             }
 
         } catch (Exception $exception) {
