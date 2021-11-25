@@ -45,11 +45,11 @@
     <?php } ?></nav>
 
     <main>
-      <p>
+      <h1>
         Liste des cocktails
-      </p>
+      </h1>
 
-      <div class="card-columns">
+      <div class="card-deck">
         <?php
           $index = 0;
           $liste_ingredients = getIngredientsList($aliment, $Hierarchie); // retourne une liste avec tous les ingrédients de la catégorie correspondante

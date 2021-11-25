@@ -259,7 +259,7 @@ function creerCarte(array $recette, array $Recettes): string
   $coeur = getCoeurRecette($indice_recette, 3); // coeur vide ou plein
 
   $format = '
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="min-width: 18rem;">
           <img class="card-img-top" src="'.$image.'" alt="Recette numéro '.$indice_recette.'">
           <div class="svg-carte">'.$coeur.'
           </div>
