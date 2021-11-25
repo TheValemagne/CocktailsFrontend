@@ -3,24 +3,27 @@
   $aliment = isset($_GET["fil"]) ? urlToStr(end($fil_aliments)) :  "Aliment";
 
   if(checkFilAliments($fil_aliments, $Hierarchie)) { //Si fil d'Ariane valide ou aliment valide ?>
-    <nav>
-      <!-- TODO: modifiter l'apparence du lien en mettant dans un ul / li -->
-      Aliment courant
-      <br />
-      <a href="index.php?page=navigation">Aliment</a>
-      <?php
-        $index = 0;
+    <nav aria-label="breadcrumb">
+      <p>
+        Aliment courant
+      </p>
 
-        foreach ($fil_aliments as $ancien_aliment) { // construction du fil d'Ariane
-          if($index > 0){ // indentation du code
-            echo "\t  ";
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.php?page=navigation">Aliment</a></li>
+        <?php
+          $index = 0;
+
+          foreach ($fil_aliments as $ancien_aliment) { // construction du fil d'Ariane
+            if($index > 0){ // indentation du code
+              echo "\t\t";
+            }
+            $ancien_fil_aliments = setFilAliments(array_slice($fil_aliments, 0, $index + 1)); // ancien fil d'Ariane pour revenir en arrière
+            echo '<li class="breadcrumb-item"><a href="index.php?page=navigation&fil='.$ancien_fil_aliments.'">'.urlToStr($ancien_aliment)."</a></li>\n";
+            $index++;
           }
-          $ancien_fil_aliments = setFilAliments(array_slice($fil_aliments, 0, $index + 1)); // ancien fil d'Ariane pour revenir en arrière
-          echo '<a href="index.php?page=navigation&fil='.$ancien_fil_aliments.'">'.urlToStr($ancien_aliment)."</a>\n";
-          $index++;
-        }
-      ?>
-      <br />
+        ?>
+      </ol>
+
       <?php if(isset($Hierarchie[$aliment]["sous-categorie"])){ ?>
 
       Sous-catégories :

@@ -38,11 +38,6 @@ nav ul    {
 	list-style-type: square;
 }
 
-nav a+a:before {
-	content: ' / ';
-}
-
-
 main {
 	background-color: #aaa;
 	margin-top: -1px;
@@ -80,6 +75,10 @@ a {
 nav ul li a:hover {
 	background-color: #555;
 	color: white;
+}
+
+.breadcrumb-item{
+	list-style-type: none;
 }
 
 .card-columns {

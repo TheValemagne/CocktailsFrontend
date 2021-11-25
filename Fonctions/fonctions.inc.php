@@ -236,7 +236,8 @@ function calculateRecipeSatisfaction(array $recipe, array $hierarchy, array $wan
  *
  * @return string une carte Bootstrap
  */
-function creerCarte(array $recette, array $Recettes): string {
+function creerCarte(array $recette, array $Recettes): string
+{
   $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
   $image = getImageSrc($Recettes[$indice_recette]['titre']);
 
