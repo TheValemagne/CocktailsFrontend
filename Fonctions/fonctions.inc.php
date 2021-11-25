@@ -236,14 +236,15 @@ function calculateRecipeSatisfaction(array $recipe, array $hierarchy, array $wan
  *
  * @return string une carte Bootstrap
  */
-function getCoeurRecette(string $indice_recette): string
+function getCoeurRecette(string $indice_recette, int $indentation): string
 {
   $favorie = (isset($_SESSION['recettes']) && in_array($indice_recette, $_SESSION['recettes'])) ? "heart heartFilled" : "heart heartNotFilled";
+  $tabulation = str_repeat("\t", $indentation); // tabulation pour un meilleur rendu de code pour les pages avec cartes et recettes détaillées
 
   return '
-            <svg class="'.$favorie.'">
-              <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
-            </svg>';
+  '.$tabulation.'<svg class="'.$favorie.'" onclick="alert('.$indice_recette.')">
+  '.$tabulation.'  <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+  '.$tabulation.'</svg>';
 }
 
 /**
@@ -255,7 +256,7 @@ function creerCarte(array $recette, array $Recettes): string
 {
   $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
   $image = getImageSrc($Recettes[$indice_recette]['titre']); // image de la recette
-  $coeur = getCoeurRecette($indice_recette); // coeur vide ou plein
+  $coeur = getCoeurRecette($indice_recette, 3); // coeur vide ou plein
 
   $format = '
         <div class="card" style="width: 18rem;">

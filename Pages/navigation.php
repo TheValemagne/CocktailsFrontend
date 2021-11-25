@@ -21,7 +21,7 @@
             echo '<li class="breadcrumb-item"><a href="index.php?page=navigation&fil='.$ancien_fil_aliments.'">'.urlToStr($ancien_aliment)."</a></li>\n";
             $index++;
           }
-        ?>
+          ?>
       </ol>
 
       <?php if(isset($Hierarchie[$aliment]["sous-categorie"])){ ?>
