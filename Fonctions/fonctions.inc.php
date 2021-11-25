@@ -80,9 +80,9 @@ function getImageSrc(string $titre_cocktail): string
     $replace = array('e', 'e', 'a', 'a', "c", "i", "i", "u", "u", "n", "", "");
 
     $nom_cocktail = str_replace($search, $replace, strtolower($titre_cocktail)); // enlève les accents et espace du nom
-    $image = "./Photos/" . ucwords(strToUrl($nom_cocktail)) . ".jpg";
+    $image = "Photos/" . ucwords(strToUrl($nom_cocktail)) . ".jpg";
 
-    return file_exists($image) ? $image : "./Photos/cocktail.png"; // image existe sinon image par défaux
+    return file_exists($image) ? $image : "Photos/cocktail.png"; // image existe sinon image par défaux
 }
 
 // retourne une liste avec tous les ingrédients de la catégorie correspondante

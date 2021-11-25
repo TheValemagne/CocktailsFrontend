@@ -23,10 +23,12 @@
           }
           ?>
       </ol>
-
       <?php if(isset($Hierarchie[$aliment]["sous-categorie"])){ ?>
 
-      Sous-catégories :
+      <p>
+        Sous-catégories :
+      </p>
+
       <ul>
         <?php
           $sous_gategories = $Hierarchie[$aliment]["sous-categorie"];
@@ -45,9 +47,7 @@
     <?php } ?></nav>
 
     <main>
-      <h1>
-        Liste des cocktails
-      </h1>
+      <h1>Liste des cocktails</h1>
 
       <div class="card-deck">
         <?php
