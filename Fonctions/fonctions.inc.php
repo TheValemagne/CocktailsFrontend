@@ -85,7 +85,11 @@ function getImageSrc(string $titre_cocktail): string
     return file_exists($image) ? $image : "Photos/cocktail.png"; // image existe sinon image par défaux
 }
 
-// retourne une liste avec tous les ingrédients de la catégorie correspondante
+/**
+ * Retourne une liste avec tous les ingrédients de la catégorie correspondante
+ *
+ * @return array liste d'ingrédients avec sous-catégories
+ */
 function getIngredientsList(string $ingredient, array $Hierarchie): array
 {
     if (!isset($Hierarchie[$ingredient])) { // ingrédient inexistant, retourne un tableau vide
@@ -145,6 +149,7 @@ function splitSearchString(string $search): array
 
 /**
  * helper method for splitting the search string into wanted and unwanted ingredients
+ *
  * @return array|array[] ['contains'=> [ingredients], 'notContains'=>[ingredients]]
  */
 function filterMatches(array $matches): array
@@ -195,7 +200,8 @@ function findRecipies(array $wanted, array $unwanted, array $hierarchy, array $r
         }
     }
 
-    krsort($recipesSatisfyCriteria);
+    array_multisort( array_column($recipesSatisfyCriteria, "0"), SORT_DESC, $recipesSatisfyCriteria ); // tri les recettes par satisfaction en ordre décroissant
+    
     return $recipesSatisfyCriteria;
 }
 

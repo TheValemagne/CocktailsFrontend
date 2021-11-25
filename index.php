@@ -34,8 +34,7 @@ $pages_non_authentifie = array("inscription", "navigation", "recette", "recettes
   	<header>
       <ul>
         <li><a href="index.php?page=navigation" class="btn btn-outline-dark">Navigation</a></li>
-        <li><a href="index.php?page=recettes" class="btn btn-outline-dark">Recettes ❤️</a>
-      </li>
+        <li><a href="index.php?page=recettes" class="btn btn-outline-dark">Recettes ❤️</a></li>
         <li>
           <form action="index.php?page=recherche" method="post">
             Recherche : <input type="text" value='<?php echo isset($_POST["requette"]) ? $_POST["requette"] : "" ; ?>' name="requette"/>
