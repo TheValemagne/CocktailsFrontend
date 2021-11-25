@@ -94,3 +94,30 @@ nav ul li a:hover {
 	width: 128px;
 	height:128px;
 }
+
+.heart {
+	width: 160%;
+	height: 160%;
+}
+
+.heartNotFilled{
+	fill: grey;
+}
+
+.heartFilled{
+	fill: red;
+}
+
+.svg-carte {
+	position: absolute;
+	top: 2%;
+	left: 86%;
+	right: 0;
+}
+
+.svg-recette {
+	position: absolute;
+	top: 4%;
+	left: 98%;
+	right: 0;
+}

@@ -232,6 +232,21 @@ function calculateRecipeSatisfaction(array $recipe, array $hierarchy, array $wan
 }
 
 /**
+ * Retourne la balise SVG avec le cour plein si c'est une recette préférée sinon un coeur vide.
+ *
+ * @return string une carte Bootstrap
+ */
+function getCoeurRecette(string $indice_recette): string
+{
+  $favorie = (isset($_SESSION['recettes']) && in_array($indice_recette, $_SESSION['recettes'])) ? "heart heartFilled" : "heart heartNotFilled";
+
+  return '
+            <svg class="'.$favorie.'">
+              <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+            </svg>';
+}
+
+/**
  * Retourne la carte de visualisation d'une recette.
  *
  * @return string une carte Bootstrap
@@ -239,11 +254,14 @@ function calculateRecipeSatisfaction(array $recipe, array $hierarchy, array $wan
 function creerCarte(array $recette, array $Recettes): string
 {
   $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
-  $image = getImageSrc($Recettes[$indice_recette]['titre']);
+  $image = getImageSrc($Recettes[$indice_recette]['titre']); // image de la recette
+  $coeur = getCoeurRecette($indice_recette); // coeur vide ou plein
 
   $format = '
         <div class="card" style="width: 18rem;">
           <img class="card-img-top" src="'.$image.'" alt="Recette numéro '.$indice_recette.'">
+          <div class="svg-carte">'.$coeur.'
+          </div>
           <div class="card-body">
             <h5 class="card-title"><a href="index.php?page=recette&recette='.$indice_recette.'">'.$recette["titre"].'</a></h5>
             <ul>';

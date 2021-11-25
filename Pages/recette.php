@@ -5,6 +5,10 @@
 <?php } else { // la recette existante dans la base de donnée ?>
       <h1><?php echo $Recettes[$_GET["recette"]]['titre'] ?></h1>
 
+      <div class="svg-recette">
+        <?php echo getCoeurRecette($_GET["recette"]) ?>
+      </div>
+
       <img alt="<?php echo 'image recette n°'.$_GET["recette"] ?>" src="<?php echo getImageSrc($Recettes[$_GET["recette"]]['titre']) ?>">
 
       <h2>préparation :</h2>
