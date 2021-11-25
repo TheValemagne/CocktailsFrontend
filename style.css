@@ -83,6 +83,8 @@ nav ul li a:hover {
 
 .card {
 	margin-top: 15px;
+	min-width: 18rem;
+	max-width: 19rem;
 }
 
 .card-columns {

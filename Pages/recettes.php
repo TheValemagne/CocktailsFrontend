@@ -5,9 +5,9 @@
         if(isset($_SESSION["recettes"])){
           $index = 0;
 
-          echo '<div class="card-columns">'."\n";
+          echo '<div class="card-deck">'."\n";
 
-          foreach ($_SESSION["recettes"] as $indice_recette) { // TODO: ajout de favorie en stockant l'indice de la recette
+          foreach ($_SESSION["recettes"] as $indice_recette) {
             if($index > 0){ // indentation du code
               echo "\t\t";
             }
