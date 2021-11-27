@@ -6,15 +6,15 @@ include("Donnees.inc.php"); // la base de donnée avec les recettes et ingrédia
 
 // verifications
 include("Verifications/deconnexion.inc.php"); // gestion de la déconnexion d'un compte
-include("Verifications/connection.inc.php"); // gestion de la connection à un compte existant
+include("Verifications/connexion.inc.php"); // gestion de la connecxion à un compte existant
 include("Verifications/formulaire.inc.php"); // vérification du formulaire d'inscription / modification compte
 include("Verifications/validationProfil.php"); // met à jour la base de données lors d'un changement du profil
 
 // fonctions
 include("Fonctions/fonctions.inc.php"); // fichier de définition des fonctions
 
-$pages_authentifie = array("monProfil", "navigation", "recette", "recettes", "recherche");
-$pages_non_authentifie = array("inscription", "navigation", "recette", "recettes", "recherche");
+$pages_authentifie = array("monProfil", "navigation", "recette", "recettes", "recherche"); // les pages autorisées pour un client connecté
+$pages_non_authentifie = array("inscription", "navigation", "recette", "recettes", "recherche"); // les pages autorisées pour un client non connecté
 ?>
 <!DOCTYPE html>
 
@@ -34,8 +34,7 @@ $pages_non_authentifie = array("inscription", "navigation", "recette", "recettes
   	<header>
       <ul>
         <li><a href="index.php?page=navigation" class="btn btn-outline-dark">Navigation</a></li>
-        <li><a href="index.php?page=recettes" class="btn btn-outline-dark">Recettes ❤️</a>
-      </li>
+        <li><a href="index.php?page=recettes" class="btn btn-outline-dark">Recettes ❤️</a></li>
         <li>
           <form action="index.php?page=recherche" method="post">
             Recherche : <input type="text" value='<?php echo isset($_POST["requette"]) ? $_POST["requette"] : "" ; ?>' name="requette"/>
@@ -43,7 +42,7 @@ $pages_non_authentifie = array("inscription", "navigation", "recette", "recettes
           </form>
         </li>
         <li>
-          <?php include("Pages/zoneConnection.inc.php"); ?>
+          <?php include("Pages/zoneConnexion.inc.php"); // formulaire de connection / espace membre ?>
         </li>
       </ul>
   	</header>

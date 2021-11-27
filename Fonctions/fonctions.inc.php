@@ -85,7 +85,11 @@ function getImageSrc(string $titre_cocktail): string
     return file_exists($image) ? $image : "Photos/cocktail.png"; // image existe sinon image par défaux
 }
 
-// retourne une liste avec tous les ingrédients de la catégorie correspondante
+/**
+ * Retourne une liste avec tous les ingrédients de la catégorie correspondante
+ *
+ * @return array liste d'ingrédients avec sous-catégories
+ */
 function getIngredientsList(string $ingredient, array $Hierarchie): array
 {
     if (!isset($Hierarchie[$ingredient])) { // ingrédient inexistant, retourne un tableau vide
@@ -107,6 +111,7 @@ function getIngredientsList(string $ingredient, array $Hierarchie): array
 
 /**
  * Splits the search string into the wanted and unwanted ingredients
+ *
  * @return array ['contains'=> [ingredients], 'notContains'=>[ingredients]]
  * @throws Exception if the search string is invalid
  */
@@ -145,6 +150,7 @@ function splitSearchString(string $search): array
 
 /**
  * helper method for splitting the search string into wanted and unwanted ingredients
+ *
  * @return array|array[] ['contains'=> [ingredients], 'notContains'=>[ingredients]]
  */
 function filterMatches(array $matches): array
@@ -195,7 +201,8 @@ function findRecipies(array $wanted, array $unwanted, array $hierarchy, array $r
         }
     }
 
-    krsort($recipesSatisfyCriteria);
+    array_multisort( array_column($recipesSatisfyCriteria, "0"), SORT_DESC, $recipesSatisfyCriteria ); // tri les recettes par satisfaction en ordre décroissant
+
     return $recipesSatisfyCriteria;
 }
 
@@ -252,7 +259,7 @@ function getCoeurRecette(string $indice_recette, int $indentation): string
  *
  * @return string une carte Bootstrap
  */
-function creerCarte(array $recette, array $Recettes): string
+function creerCarte(array $recette, array $Recettes, string $satisfaction = ""): string
 {
   $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
   $image = getImageSrc($Recettes[$indice_recette]['titre']); // image de la recette

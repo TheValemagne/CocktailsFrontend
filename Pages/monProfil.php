@@ -9,7 +9,7 @@
     }
   }
 
-  if(isset($_SESSION['login'])){ // enregistre le login pour chaque rechargement. Disable ne rcupère pas la value.
+  if(isset($_SESSION['login'])){ // enregistre le login pour chaque rechargement. Disable ne récupère pas la value.
     $_POST['login'] = $_SESSION['login'];
   }
 

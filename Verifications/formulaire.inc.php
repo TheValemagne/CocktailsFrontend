@@ -35,7 +35,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   if(isset($_POST["nom"]) && !empty(trim($_POST["nom"])) ) {
     $nom = str_replace($search, $replace, strtolower(trim($_POST['nom'])));
 
-    if(strlen($nom) < 2 || !ctype_alpha($nom)){
+    if(strlen($nom) < 2 || !ctype_alpha($nom)){ // le nom doit contenir que des lettres et avoir plus de 2 lettres
       array_push($erreurs_inscription, "nom");
       array_push($erreurs_messages, "Le nom est incorrect.");
     } else {
@@ -46,7 +46,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   if(isset($_POST["prenom"]) && !empty(trim($_POST["prenom"])) ) {
     $prenom = str_replace($search, $replace, strtolower(trim($_POST['prenom'])));
 
-    if(strlen($prenom) < 2 || !ctype_alpha($prenom) ){
+    if(strlen($prenom) < 2 || !ctype_alpha($prenom) ){ // le prenom doit contenir que des lettres et avoir plus de 2 lettres
       array_push($erreurs_inscription, "prenom");
       array_push($erreurs_messages, "Le prenom est incorrect.");
     } else {
@@ -54,7 +54,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
     }
   }
 
-  if(isset($_POST["sexe"]) && !in_array($_POST["sexe"], array('f', 'h')) ){
+  if(isset($_POST["sexe"]) && !in_array($_POST["sexe"], array('f', 'h')) ){ // le genre doit être h (homme) ou f (femme)
     array_push($erreurs_inscription, "sexe");
     array_push($erreurs_messages, "Le sexe est incorrect.");
   } else if(isset($_POST["sexe"])){
@@ -64,7 +64,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   if(isset($_POST["mail"]) && !empty(trim($_POST["mail"])) ){
     $mail = str_replace($search, $replace, strtolower(trim($_POST['mail'])));
 
-    if(!filter_var($_POST["mail"], FILTER_VALIDATE_EMAIL) ){
+    if(!filter_var($_POST["mail"], FILTER_VALIDATE_EMAIL) ){ // l'adresse email doit avoir un format valide
       array_push($erreurs_inscription, "mail");
       array_push($erreurs_messages, "Adresse email invalide.");
     } else {
@@ -76,7 +76,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
     $naissance = trim($_POST["naissance"]);
 
     if(preg_match('#^([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})$#', $naissance) ){
-      list($jour, $mois, $annee) = explode( "/", $naissance); // jj/mm/aaaa
+      list($jour, $mois, $annee) = explode( "/", $naissance); // format jj/mm/aaaa
     }
 
     if(!isset($jour) || !isset($mois) || !isset($annee) || !checkdate($mois, $jour, $annee) || ($jour > Date("d") && $mois >= Date("m") && $annee >= Date("Y")) ){
@@ -116,7 +116,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   if(isset($_POST["code_postal"]) && !empty(trim($_POST["code_postal"])) ){
     $code_postal = trim($_POST["code_postal"]);
 
-    if(!preg_match('#^[0-9]{5}$#', $code_postal) ){ // 5 chiffres dans le code postal en France -> 57070
+    if(!preg_match('#^[0-9]{5}$#', $code_postal) ){ // 5 chiffres dans le code postal en France
       array_push($erreurs_inscription, "code_postal");
       array_push($erreurs_messages, "Le code postal doit comporter exactement 5 chiffres.");
     } else {
@@ -127,7 +127,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   if(isset($_POST["ville"]) && !empty(trim($_POST["ville"])) ){
     $ville = str_replace($search, $replace, strtolower(trim($_POST['ville'])));
 
-    if(strlen($ville) < 1 || !ctype_alpha($ville) ){ // Y est une commune française
+    if(strlen($ville) < 1 || !ctype_alpha($ville) ){ // Y est une commune française, la ville doit contenir que des lettres
       array_push($erreurs_inscription, "ville");
       array_push($erreurs_messages, "La ville est incorrecte.");
     } else {
@@ -138,7 +138,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   if(isset($_POST["telephone"]) && !empty($_POST["telephone"]) ){
     $telephone = filter_var($_POST["telephone"], FILTER_SANITIZE_NUMBER_INT); // numéro limité aux numéros français standart : commence par 0 suivi de 9 chiffres
 
-    if(!ctype_digit($telephone) || strlen($telephone) != 10 || strpos($telephone, "0") != 0){
+    if(!ctype_digit($telephone) || strlen($telephone) != 10 || strpos($telephone, "0") != 0){ // le téléphone doit contenir 10 chiffres et commencer par 0
       array_push($erreurs_inscription, "telephone");
       array_push($erreurs_messages, "Le numéro de téléphone est incorrect.");
     } else {

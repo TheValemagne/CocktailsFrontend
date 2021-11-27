@@ -23,7 +23,7 @@
           }
           ?>
       </ol>
-      <?php if(isset($Hierarchie[$aliment]["sous-categorie"])){ ?>
+      <?php if(isset($Hierarchie[$aliment]["sous-categorie"])){ // liste des ingrédients en sous-catégorie ?>
 
       <p>
         Sous-catégories :
@@ -50,7 +50,7 @@
       <h1>Liste des cocktails</h1>
 
       <div class="card-deck">
-        <?php
+        <?php // construction de la liste de carte de cocktail
           $index = 0;
           $liste_ingredients = getIngredientsList($aliment, $Hierarchie); // retourne une liste avec tous les ingrédients de la catégorie correspondante
 
@@ -60,7 +60,7 @@
                 echo "\t\t";
               }
 
-              echo creerCarte($recette, $Recettes);
+              echo creerCarte($recette, $Recettes); // la carte du cocktail
 
               $index++;
             }
@@ -70,7 +70,7 @@
       </div>
 
     </main>
-    <?php } else { ?><main>
+  <?php } else { // erreur dans le fil d'Ariane ou ingrédient non valide ?><main>
       <p>
         Une erreur est survenue lors de la recherche de votre aliment. Retour vers la <a href="./index.php?page=navigation">page de navigation</a>.
       </p>

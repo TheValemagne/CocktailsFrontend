@@ -2,7 +2,7 @@
       <h1>Recettes préférées</h1>
 
       <?php
-        if(isset($_SESSION["recettes"])){
+        if(isset($_SESSION["recettes"])){ // affiche une liste de cartes de cocktails préférés
           $index = 0;
 
           echo '<div class="card-deck">'."\n";
@@ -12,7 +12,7 @@
               echo "\t\t";
             }
 
-            echo creerCarte($Recettes[$indice_recette], $Recettes);
+            echo creerCarte($Recettes[$indice_recette], $Recettes); // la carte du cocktail
 
             $index++;
           }
@@ -20,7 +20,7 @@
           echo "
       </div>\n";
 
-        } else { ?><p>Aucune recette préférée pour l'instant</p>
+    } else { // aucune recette préférée ?><p>Aucune recette préférée pour l'instant</p>
 <?php } ?>
 
     </main>
