@@ -46,27 +46,27 @@ function setFilAliments(array $tableau_aliments): string
  * @return bool le fil est valide ou non
  */
 function checkFilAliments(array $tableau_aliments, array $hierarchie): bool {
-  if(sizeof($tableau_aliments) === 0) {
-    return true;
-  }
-
-  $super_categorie = urlToStr($tableau_aliments[0]);
-
-  if(!isset($hierarchie[$super_categorie])) {
-    return false;
-  }
-
-  for($i = 1; $i < (sizeof($tableau_aliments)); $i++) {
-    $sous_categorie = urlToStr($tableau_aliments[$i]);
-
-    if(!in_array($sous_categorie, $hierarchie[$super_categorie]["sous-categorie"])) {
-      return false;
+    if(sizeof($tableau_aliments) === 0) {
+      return true;
     }
 
-    $super_categorie = $sous_categorie;
-  }
+    $super_categorie = urlToStr($tableau_aliments[0]);
 
-  return true;
+    if (!isset($hierarchie[$super_categorie])) {
+        return false;
+    }
+
+    for ($i = 1; $i < (sizeof($tableau_aliments)); $i++) {
+        $sous_categorie = urlToStr($tableau_aliments[$i]);
+
+        if (!in_array($sous_categorie, $hierarchie[$super_categorie]["sous-categorie"])) {
+            return false;
+        }
+
+        $super_categorie = $sous_categorie;
+    }
+
+    return true;
 }
 
 /**

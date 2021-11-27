@@ -45,15 +45,14 @@
                 $recettes = findRecipies($wanted, $unwanted, $Hierarchie, $Recettes);
 
                 foreach($recettes as $index => $recipeArray){
-                   $satisfaction = $recipeArray[0];
-                   $recipe = $recipeArray[1];
-                   if(!isset($currentScore) || $satisfaction != $currentScore){
-                       echo "
-    <p>Satisfaction: $satisfaction %</p>\n";
-                       $currentScore = $satisfaction;
-                   }
-                   echo creerCarte($recipe, $Recettes);
-               }
+                    $satisfaction = $recipeArray[0];
+                    $recipe = $recipeArray[1];
+                    if(!isset($currentScore) || $satisfaction != $currentScore){
+                        echo "<p>Satisfaction: $satisfaction %</p>";
+                        $currentScore = $satisfaction;
+                    }
+                    echo creerCarte($recipe, $Recettes);
+                }
             }
 
         } catch (Exception $exception) {
