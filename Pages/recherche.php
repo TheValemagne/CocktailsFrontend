@@ -38,9 +38,9 @@
             if (empty($wanted) && empty($unwanted)) {
                 echo "<p>Problème dans votre requête : recherche impossible</p>";
             } else {
-                $recipes = findRecipies($wanted, $unwanted, $Hierarchie, $Recettes);
+                $recettes = findRecipies($wanted, $unwanted, $Hierarchie, $Recettes);
 
-                foreach($recipes as $index => $recipeArray){
+                foreach($recettes as $index => $recipeArray){
                     $satisfaction = $recipeArray[0];
                     $recipe = $recipeArray[1];
                     if(!isset($currentScore) || $satisfaction != $currentScore){

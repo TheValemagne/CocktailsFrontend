@@ -86,12 +86,18 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
       array_push($donnees_valides, "naissance");
     }
 
-    if(!in_array("naissance", $erreurs_inscription)){ // la date de naissance doit être antérieur de 18 ans à la date du jour
+    if(!in_array("naissance", $erreurs_inscription)){ // la date de naissance doit être antérieure de 18 ans à la date du jour et postérieure à 100 ans
       $date_18 = new DateTime((Date('Y') - 18).'-'.Date('m').'-'.Date('d')); // la date 18 ans en arrière
+      $date_100 = new DateTime((Date('Y') - 100).'-'.Date('m').'-'.Date('d')); // la date 100 ans en arrière
 
       if( new DateTime($annee.'-'.$mois.'-'.$jour) > $date_18){ // le client est mineur
         array_push($erreurs_inscription, "naissance");
         array_push($erreurs_messages, "Vous devez être majeur pour vous inscrire.");
+      }
+
+      if( new DateTime($annee.'-'.$mois.'-'.$jour) < $date_100){ // le client est "trop" vieux
+        array_push($erreurs_inscription, "naissance");
+        array_push($erreurs_messages, "La date de naissance est incorrecte.");
       }
     }
   }

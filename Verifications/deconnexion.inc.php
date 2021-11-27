@@ -2,7 +2,12 @@
 if(isset($_POST["deconnexion"])){ // demande de deconnexion du compte actuel
   $_SESSION = array(); // vide le tableau de session
   session_destroy(); // arrête la session en cours
-  header("Location: ./index.php"); // redirection vers la page d'acceuil
+
+  if(isset($_GET["page"]) && $_GET['page'] == "monProfil"){
+    header("Location: ./index.php"); // redirection vers la page d'acceuil
+  } else {
+      header("Location: ".$_SERVER['REQUEST_URI']);
+  }
   exit;
 }
 ?>

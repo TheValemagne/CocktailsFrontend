@@ -1,21 +1,26 @@
     <main>
       <h1>Recettes préférées</h1>
 
-      <ul>
-        <?php
-          if(isset($_SESSION["recettes"])){
-            $index = 0;
+      <?php
+        if(isset($_SESSION["recettes"])){
+          $index = 0;
 
-            foreach ($_SESSION["recettes"] as $indice_recette) { // TODO: ajout de favorie en stockant l'indice de la recette
-              if($index > 0){ // indentation du code
-                echo "\t\t";
-              }
+          echo '<div class="card-deck">'."\n";
 
-              echo '<li><a href="index.php?page=recette&recette='.$indice_recette.'">'.$Recettes[$indice_recette]["titre"]."</a></li>\n";
-              $index++;
+          foreach ($_SESSION["recettes"] as $indice_recette) {
+            if($index > 0){ // indentation du code
+              echo "\t\t";
             }
-          } else { ?><li>Aucune recette préférée pour l'instant</li>
+
+            echo creerCarte($Recettes[$indice_recette], $Recettes);
+
+            $index++;
+          }
+
+          echo "
+      </div>\n";
+
+        } else { ?><p>Aucune recette préférée pour l'instant</p>
 <?php } ?>
-      </ul>
 
     </main>

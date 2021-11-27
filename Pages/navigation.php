@@ -1,29 +1,34 @@
 <?php
   $fil_aliments = isset($_GET["fil"]) ? getFilAliments($_GET["fil"]) : array(); // récupère le fil d'Ariane
   $aliment = isset($_GET["fil"]) ? urlToStr(end($fil_aliments)) :  "Aliment";
-?>
-    <?php if(checkFilAliments($fil_aliments, $Hierarchie)) { //Si fil d'Ariane valide ou aliment valide ?>
-    <nav>
-      <!-- TODO: modifiter l'apparence du lien en mettant dans un ul / li --> 
-      Aliment courant
-      <br />
-      <a href="index.php?page=navigation">Aliment</a>
-      <?php
-        $index = 0;
 
-        foreach ($fil_aliments as $ancien_aliment) { // construction du fil d'Ariane
-          if($index > 0){ // indentation du code
-            echo "\t  ";
+  if(checkFilAliments($fil_aliments, $Hierarchie)) { //Si fil d'Ariane valide ou aliment valide ?>
+    <nav aria-label="breadcrumb">
+      <p>
+        Aliment courant
+      </p>
+
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.php?page=navigation">Aliment</a></li>
+        <?php
+          $index = 0;
+
+          foreach ($fil_aliments as $ancien_aliment) { // construction du fil d'Ariane
+            if($index > 0){ // indentation du code
+              echo "\t\t";
+            }
+            $ancien_fil_aliments = setFilAliments(array_slice($fil_aliments, 0, $index + 1)); // ancien fil d'Ariane pour revenir en arrière
+            echo '<li class="breadcrumb-item"><a href="index.php?page=navigation&fil='.$ancien_fil_aliments.'">'.urlToStr($ancien_aliment)."</a></li>\n";
+            $index++;
           }
-          $ancien_fil_aliments = setFilAliments(array_slice($fil_aliments, 0, $index + 1)); // ancien fil d'Ariane pour revenir en arrière
-          echo '<a href="index.php?page=navigation&fil='.$ancien_fil_aliments.'">'.urlToStr($ancien_aliment)."</a>\n";
-          $index++;
-        }
-      ?>
-      <br />
+          ?>
+      </ol>
       <?php if(isset($Hierarchie[$aliment]["sous-categorie"])){ ?>
 
-      Sous-catégories :
+      <p>
+        Sous-catégories :
+      </p>
+
       <ul>
         <?php
           $sous_gategories = $Hierarchie[$aliment]["sous-categorie"];
@@ -42,38 +47,32 @@
     <?php } ?></nav>
 
     <main>
-      <p>
-        Liste des cocktails
-      </p>
+      <h1>Liste des cocktails</h1>
 
-      <ul>
+      <div class="card-deck">
         <?php
-        $index = 0;
-        $liste_ingredients = getIngredientsList($aliment, $Hierarchie); // retourne une liste avec tous les ingrédients de la catégorie correspondante
+          $index = 0;
+          $liste_ingredients = getIngredientsList($aliment, $Hierarchie); // retourne une liste avec tous les ingrédients de la catégorie correspondante
 
-        echo '<div class="card-columns">';
+          foreach ($Recettes as $recette) {
+            if(sizeof(array_intersect($liste_ingredients, $recette['index'])) > 0){ // filtre les recettes contenant l'aliment selectionné
+              if($index > 0){ // indentation du code
+                echo "\t\t";
+              }
 
-        foreach ($Recettes as $recette) {
-          if(sizeof(array_intersect($liste_ingredients, $recette['index'])) > 0){ // filtre les recettes contenant l'aliment selectionné
-            if($index > 0){ // indentation du code
-              echo "\t\t";
+              echo creerCarte($recette, $Recettes);
+
+              $index++;
             }
-
-            $html = createCard($recette, $Recettes);
-            echo $html;
-
-            $index++;
           }
-        }
-
-        echo '</div>';
-
         ?>
-      </ul>
+
+      </div>
 
     </main>
-    <?php } else { ?>
-    <p> Une erreur est survenue lors de la recherche de votre aliment.
-      Retour vers la <a href="./index.php?page=navigation">page de navigation</a>.
-    </p>
+    <?php } else { ?><main>
+      <p>
+        Une erreur est survenue lors de la recherche de votre aliment. Retour vers la <a href="./index.php?page=navigation">page de navigation</a>.
+      </p>
+    </main>
     <?php } ?>

@@ -1,35 +1,54 @@
 <?php // fonctions pour le site web
 
-// remplace les espages en _ -> revoie un paramètre d'url valide
-function strToUrl($input)
+/**
+ * Transforme une chaine de carractères en paramètre d'url valide. Remplace les espages en _.
+ *
+ * @return string paramètre d'url valide
+ */
+function strToUrl(string $input): string
 {
     return str_replace(" ", "_", $input);
 }
 
-// remplace les _ en espace -> convertie lesparamètre d'url pour retrouver l'aliment ou la recette dans la base de donnée
-function urlToStr($input)
+/**
+ * Transforme un paramètre d'url valide en une chaine de carractères classique pour un humain. Remplace les _ en espace.
+ *
+ * @return string chaine de carractères lisible
+ */
+function urlToStr(string $input): string
 {
     return str_replace("_", " ", $input);
 }
 
-// transforme le fil d'Ariane de type chaine de caractère en tableau
-function getFilAliments($fil_aliments)
+/**
+ * Transforme le fil d'Ariane de type chaine de caractère en tableau
+ *
+ * @return array tableau contenant les aliments du fil
+ */
+function getFilAliments(string $fil_aliments): array
 {
     return preg_split('#-#', $fil_aliments);
 }
 
-// définie le fil d'Ariane en fonction du tableau donné en entrée
-function setFilAliments($tableau_aliments)
+/**
+ *  Définie le fil d'Ariane en fonction du tableau donné en entrée
+ *
+ * @return string le fil des aliments en format url valide
+ */
+function setFilAliments(array $tableau_aliments): string
 {
     return implode("-", $tableau_aliments);
 }
 
-// vérifie que le fil d'Ariane soit valide
-function checkFilAliments($tableau_aliments, $hierarchie)
-{
-    if (sizeof($tableau_aliments) === 0) {
-        return true;
-    }
+/**
+ * Vérifie que le fil d'Ariane soit valide
+ *
+ * @return bool le fil est valide ou non
+ */
+function checkFilAliments(array $tableau_aliments, array $hierarchie): bool {
+  if(sizeof($tableau_aliments) === 0) {
+    return true;
+  }
 
     $super_categorie = urlToStr($tableau_aliments[0]);
 
@@ -50,20 +69,28 @@ function checkFilAliments($tableau_aliments, $hierarchie)
     return true;
 }
 
-// retourne le nom de l'image correspondant au titre du cocktail ou l'image par défaux si aucune image est assocssiée au cocktail
-function getImageSrc($titre_cocktail)
+/**
+ * Retourne le nom de l'image correspondant au titre du cocktail ou l'image par défaut si aucune image est assossiée au cocktail
+ *
+ * @return string ancre envoyant à la page correcpondant à l'ingrédient
+ */
+function getImageSrc(string $titre_cocktail): string
 {
     $search = array('é', 'è', 'ä', 'â', "ç", "ï", "î", "û", "ü", "ñ", "-", "'");
     $replace = array('e', 'e', 'a', 'a', "c", "i", "i", "u", "u", "n", "", "");
 
     $nom_cocktail = str_replace($search, $replace, strtolower($titre_cocktail)); // enlève les accents et espace du nom
-    $image = "./Photos/" . ucwords(strToUrl($nom_cocktail)) . ".jpg";
+    $image = "Photos/" . ucwords(strToUrl($nom_cocktail)) . ".jpg";
 
-    return file_exists($image) ? $image : "./Photos/cocktail.png"; // image existe sinon image par défaux
+    return file_exists($image) ? $image : "Photos/cocktail.png"; // image existe sinon image par défaux
 }
 
-// retourne une liste avec tous les ingrédients de la catégorie correspondante
-function getIngredientsList($ingredient, $Hierarchie)
+/**
+ * Retourne une liste avec tous les ingrédients de la catégorie correspondante
+ *
+ * @return array liste d'ingrédients avec sous-catégories
+ */
+function getIngredientsList(string $ingredient, array $Hierarchie): array
 {
     if (!isset($Hierarchie[$ingredient])) { // ingrédient inexistant, retourne un tableau vide
         return array();
@@ -122,6 +149,7 @@ function splitSearchString(string $search): array
 
 /**
  * helper method for splitting the search string into wanted and unwanted ingredients
+ *
  * @return array|array[] ['contains'=> [ingredients], 'notContains'=>[ingredients]]
  */
 function filterMatches(array $matches): array
@@ -153,7 +181,7 @@ function filterMatches(array $matches): array
 /**
  * @return bool returns true if the item is in the ingredient hierarchy
  */
-function findInData($item, $hierarchy)
+function findInData(string $item, array $hierarchy): bool
 {
     return in_array($item, array_keys($hierarchy));
 }
@@ -161,7 +189,7 @@ function findInData($item, $hierarchy)
 /**
  * @return array an array of recipes that satisfy at least one of the search criteria. Sorted by satisfaction score (in percent) in descending order
  */
-function findRecipies($wanted, $unwanted, $hierarchy, $recipes)
+function findRecipies(array $wanted, array $unwanted, array $hierarchy, array $recipes): array
 {
     $recipesSatisfyCriteria = [];
     foreach ($recipes as $recipe) {
@@ -172,14 +200,15 @@ function findRecipies($wanted, $unwanted, $hierarchy, $recipes)
         }
     }
 
-    krsort($recipesSatisfyCriteria);
+    array_multisort( array_column($recipesSatisfyCriteria, "0"), SORT_DESC, $recipesSatisfyCriteria ); // tri les recettes par satisfaction en ordre décroissant
+
     return $recipesSatisfyCriteria;
 }
 
 /**
  * @return float|int the satisfaction score in percent (0-100)
  */
-function calculateRecipeSatisfaction($recipe, $hierarchy, $wanted, $unwanted)
+function calculateRecipeSatisfaction(array $recipe, array $hierarchy, array $wanted, array $unwanted)
 {
     $satisfiedCriteria = 0;
     $ingredients = $recipe['index'];
@@ -208,26 +237,53 @@ function calculateRecipeSatisfaction($recipe, $hierarchy, $wanted, $unwanted)
     return (int)($satisfiedCriteria / (count($wanted) + count($unwanted)) * 100);
 }
 
-function createCard($recette, $Recettes)
+/**
+ * Retourne la balise SVG avec le cour plein si c'est une recette préférée sinon un coeur vide.
+ *
+ * @return string une carte Bootstrap
+ */
+function getCoeurRecette(string $indice_recette, int $indentation): string
 {
-    $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
-    $image = getImageSrc($Recettes[$indice_recette]['titre']);
+  $favorie = (isset($_SESSION['recettes']) && in_array($indice_recette, $_SESSION['recettes'])) ? "heart heartFilled" : "heart heartNotFilled";
+  $tabulation = str_repeat("\t", $indentation); // tabulation pour un meilleur rendu de code pour les pages avec cartes et recettes détaillées
 
-    $format = '<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="' . $image . '" alt="Recette numéro ' . $indice_recette . '">
-    <div class="card-body">
-      <h5 class="card-title"><a href="index.php?page=recette&recette=' . $indice_recette . '">' . $recette["titre"] . '</a></h5>
-      <ul>';
+  return '
+  '.$tabulation.'<svg class="'.$favorie.'" onclick="alert('.$indice_recette.')">
+  '.$tabulation.'  <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+  '.$tabulation.'</svg>';
+}
 
-    foreach ($recette["index"] as $ingredient) {
-        $format .= '<li>' . $ingredient . '</li>';
-    }
+/**
+ * Retourne la carte de visualisation d'une recette.
+ *
+ * @return string une carte Bootstrap
+ */
+function creerCarte(array $recette, array $Recettes): string
+{
+  $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
+  $image = getImageSrc($Recettes[$indice_recette]['titre']); // image de la recette
+  $coeur = getCoeurRecette($indice_recette, 3); // coeur vide ou plein
 
-    $format .= '</ul>
-    </div>
-  </div>';
+  $format = '
+        <div class="card">
+          <img class="card-img-top" src="'.$image.'" alt="Recette numéro '.$indice_recette.'">
+          <div class="svg-carte">'.$coeur.'
+          </div>
+          <div class="card-body">
+            <h5 class="card-title"><a href="index.php?page=recette&recette='.$indice_recette.'">'.$recette["titre"].'</a></h5>
+            <ul>';
 
-    return $format;
+  foreach($recette["index"] as $ingredient) {
+    $format.="
+              <li>".$ingredient."</li>";
+  }
+
+  $format.="
+            </ul>
+          </div>
+        </div>\n";
+
+  return $format;
 }
 
 ?>
