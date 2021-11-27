@@ -40,7 +40,15 @@
             } else {
                 $recipes = findRecipies($wanted, $unwanted, $Hierarchie, $Recettes);
 
-                print_r($recipes); // todo replace with bootstrap card function
+                foreach($recipes as $index => $recipeArray){
+                    $satisfaction = $recipeArray[0];
+                    $recipe = $recipeArray[1];
+                    if(!isset($currentScore) || $satisfaction != $currentScore){
+                        echo "<p>Satisfaction: $satisfaction %</p>";
+                        $currentScore = $satisfaction;
+                    }
+                    echo createCard($recipe, $Recettes);
+                }
             }
 
         } catch (Exception $exception) {
