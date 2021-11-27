@@ -47,7 +47,7 @@
                         echo "<p>Satisfaction: $satisfaction %</p>";
                         $currentScore = $satisfaction;
                     }
-                    echo createCard($recipe, $Recettes);
+                    echo creerCarte($recipe, $Recettes);
                 }
             }
 
