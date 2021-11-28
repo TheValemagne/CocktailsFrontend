@@ -216,22 +216,16 @@ function calculateRecipeSatisfaction(array $recipe, array $hierarchy, array $wan
     foreach ($wanted as $wantedIngredient) {
         $completeWanted = getIngredientsList($wantedIngredient, $hierarchy);
 
-        foreach ($ingredients as $ingredient) {
-            if (in_array($ingredient, $completeWanted)) {
-                $satisfiedCriteria++;
-                break;
-            }
+        if(sizeof(array_intersect($completeWanted, $recipe['index'])) > 0){
+              $satisfiedCriteria++;
         }
     }
 
     foreach ($unwanted as $unwantedIngredient) {
         $completeUnwanted = getIngredientsList($unwantedIngredient, $hierarchy);
 
-        foreach ($ingredients as $ingredient) {
-            if (!in_array($ingredient, $completeUnwanted)) {
-                $satisfiedCriteria++;
-                break;
-            }
+        if(sizeof(array_intersect($completeUnwanted, $recipe['index'])) == 0){
+              $satisfiedCriteria++;
         }
     }
 
@@ -259,7 +253,7 @@ function getCoeurRecette(string $indice_recette, int $indentation): string
  *
  * @return string une carte Bootstrap
  */
-function creerCarte(array $recette, array $Recettes, string $satisfaction = ""): string
+function creerCarte(array $recette, array $Recettes): string
 {
   $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
   $image = getImageSrc($Recettes[$indice_recette]['titre']); // image de la recette
