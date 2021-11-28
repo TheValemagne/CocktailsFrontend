@@ -1,7 +1,7 @@
     <main>
       <h1>Résultat de recherche</h1>
       <?php
-      include_once('Donnees.inc.php');
+
       if (isset($_POST['requette'])) {
           try {
               $split = splitSearchString($_POST['requette']); // séparation des éléments en deux listes, ingrédients souhaités et non souhaités
@@ -72,6 +72,8 @@
               echo $exception->getMessage();
           }
 
+      } else {
+        echo "<p>Recherche vide</p>\n";
       }
 
       ?>

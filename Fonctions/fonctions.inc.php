@@ -31,7 +31,7 @@ function getFilAliments(string $fil_aliments): array
 }
 
 /**
- *  Définie le fil d'Ariane en fonction du tableau donné en entrée
+ * Définie le fil d'Ariane en fonction du tableau donné en entrée
  *
  * @return string le fil des aliments en format url valide
  */
