@@ -42,16 +42,16 @@
                   echo "
       <p>Problème dans votre requête : recherche impossible</p>\n";
               } else { // recherche des recettes respectant la demande du client
-                  $recettes = findRecipies($wanted, $unwanted, $Hierarchie, $Recettes);
-                  $currentScore = $recettes[0][0];
+                  $resultats_recherche = findRecipies($wanted, $unwanted, $Hierarchie, $Recettes);
+                  $currentScore = $resultats_recherche[0]["satisfaction"];
 
                   echo "
       <h2>Satisfaction: $currentScore %</h2>
       <div class=\"card-deck\">\n";
 
-                  foreach($recettes as $index => $recipeArray){
-                      $satisfaction = $recipeArray[0];
-                      $recipe = $recipeArray[1];
+                  foreach($resultats_recherche as $index => $resultat){
+                      $satisfaction = $resultat["satisfaction"];
+                      $recette = $resultat["recette"];
                       if(!isset($currentScore) || $satisfaction != $currentScore){
                           echo "
       </div>
@@ -61,7 +61,7 @@
       <div class=\"card-deck\">\n";
                           $currentScore = $satisfaction;
                       }
-                      echo creerCarte($recipe, $Recettes);
+                      echo creerCarte($recette, $Recettes);
                   }
 
                   echo "
