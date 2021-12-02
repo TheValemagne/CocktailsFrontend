@@ -5,7 +5,7 @@ if(isset($_POST["connexion"])){ // demande de connexion à un compte client
     $login = trim($_POST["login"]);
     $password = trim($_POST["password"]);
 
-    if(isset($utilisateurs_enregistrees[$login]) && $utilisateurs_enregistrees[$login]["password"] == $password){ // login et mot de passe coincides
+    if(isset($utilisateurs_enregistrees[$login]) && $utilisateurs_enregistrees[$login]["password"] === $password){ // login et mot de passe coincides
       $_SESSION["login"] = $login; // le login n'est pas dans le dictionnaire du client
 
       if(isset($_SESSION["recettes"]) && sizeof($_SESSION["recettes"]) > 0){ // le client a ajouté des recettes en préféré avant la connexion au compte
@@ -21,7 +21,7 @@ if(isset($_POST["connexion"])){ // demande de connexion à un compte client
       }
 
       if(isset($_GET["page"]) && $_GET["page"] == "inscription"){ // page d'inscription est interdite pour un client authentifié
-        header("Location: ./index.php"); // redirection vers la page d'acceuil
+        header("Location: ./index.php"); // redirection vers la page d'accueil
         exit;
       }
     }

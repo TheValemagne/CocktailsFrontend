@@ -163,7 +163,7 @@ function filterMatches(array $matches): array
     foreach ($matches as $match) {
         $match = str_replace('"', '', $match);
 
-        if (strlen($match) == 0) {
+        if (strlen($match) === 0) {
             continue;
         }
 
@@ -241,9 +241,9 @@ function getCoeurRecette(string $indice_recette, int $indentation): string
 {
   $favorie = (isset($_SESSION['recettes']) && in_array($indice_recette, $_SESSION['recettes'])) ? "heart heartFilled" : "heart heartNotFilled";
   $tabulation = str_repeat("\t", $indentation); // tabulation pour un meilleur rendu de code pour les pages avec cartes et recettes détaillées
-
+  // '.$indice_recette.'
   return '
-  '.$tabulation.'<svg class="'.$favorie.'" onclick="modifierRecette('.$indice_recette.')">
+  '.$tabulation.'<svg id="'.$indice_recette.'" class="'.$favorie.'" >
   '.$tabulation.'  <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
   '.$tabulation.'</svg>';
 }

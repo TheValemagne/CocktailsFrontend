@@ -15,7 +15,7 @@
 
   include("Pages/formulaire.inc.php");
 
-if(sizeof($erreurs_inscription) == 0 && sizeof($donnees_valides) > 0 && isset($_POST["modifier"])) { ?>
+if(sizeof($erreurs_inscription) === 0 && sizeof($donnees_valides) > 0 && isset($_POST["modifier"])) { ?>
       <p>
         Données enregistrées!
       </p>

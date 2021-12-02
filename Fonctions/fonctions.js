@@ -1,13 +1,26 @@
 
-function connectionCompte(){
-  let login = document.forms["login"].elements["login"].value;
-  let password = document.forms["login"].elements["password"].value;
-  let utilisateurs_enregistrees = JSON.parse(readFile("user.json")); // TODO: read json file
+function modifierRecette($this){ // index_recette
+  let index_recette = $this.attr('id');
+  $.get("Fonctions/modifierRecette.php?recette=" + index_recette); // modifie la recette voulue
 
-  if(!login || !password || !utilisateurs_enregistrees[login]["password"] === password){
-    document.getElementById("erreur_connection").innerHTML = "Login ou mot de passe invalide";
-    return false;
+  if($this.attr('class') === "heart heartFilled"){
+    $this.attr('class', "heart heartNotFilled");
+
+    if(window.location.href.indexOf("index.php?page=recettes") > 0){
+      $this.parents('.card').remove(); // div .card
+
+      if($('.card-deck').children().length === 0){
+        $('.card-deck').remove();
+        $('main').append( "<p>Aucune recette préférée pour l'instant</p>" );
+      }
+    }
+  } else {
+    $this.attr('class', "heart heartFilled");
   }
-
-  return true;
 }
+
+$(document).ready(function() {
+  $('svg').click(function(){
+    modifierRecette($(this));
+  });
+});

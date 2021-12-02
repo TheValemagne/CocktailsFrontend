@@ -1,5 +1,5 @@
 <?php // ouverture de la base de donnée user.json
-if(sizeof($erreurs_inscription) == 0 && sizeof($donnees_valides) > 0 && isset($_POST["modifier"]) && $authentifie) {
+if(sizeof($erreurs_inscription) === 0 && sizeof($donnees_valides) > 0 && isset($_POST["modifier"]) && $authentifie) {
   $donnee_utilisateurs = json_decode(file_get_contents("user.json"), true); // associative = true
 
   foreach ($donnees_valides as $donnee) {
