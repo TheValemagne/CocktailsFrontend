@@ -15,7 +15,8 @@ if(isset($_GET['recette']) && isset($Recettes[$_GET['recette']]) ){ // le numér
 
     if(isset($_SESSION['login']) && isset($_SESSION['password'])){ // l'utilisateur est connecté
         $utilisateurs_enregistrees = json_decode(file_get_contents("../user.json"), true); // base de données avec les donnees enregistres
-        $utilisateurs_enregistrees[$_SESSION['login']]["recettes"] = array_diff($utilisateurs_enregistrees[$_SESSION['login']]["recettes"], array($_GET['recette']));
+        unset($utilisateurs_enregistrees[$_SESSION['login']]["recettes"][array_search($_GET['recette'],
+                                                                         $utilisateurs_enregistrees[$_SESSION['login']]["recettes"])]);
 
         usort($utilisateurs_enregistrees[$_SESSION['login']]["recettes"], $triParTitre); // tri en fonction des titres de recettes
         file_put_contents("../user.json", json_encode($utilisateurs_enregistrees, JSON_PRETTY_PRINT)); // enregistrement des changements
