@@ -1,6 +1,6 @@
 
 function modifierRecette($this){ // index_recette
-  let index_recette = $this.attr('id');
+  let index_recette = $this.parent().attr('id');
   $.get("Fonctions/modifierRecette.php?recette=" + index_recette); // modifie la recette voulue
 
   if($this.attr('class') === "heart heartFilled"){

@@ -5,7 +5,7 @@
 <?php } else { // la recette existante dans la base de donnée ?>
       <h1><?php echo $Recettes[$_GET["recette"]]['titre'] ?></h1>
 
-      <div class="svg-recette"><?php echo getCoeurRecette($_GET["recette"], 2) // le coeur pour recette préférée ou non ?>
+      <div class="svg-recette" id="<?php echo $_GET["recette"] ?>"><?php echo getCoeurRecette($_GET["recette"], 2) // le coeur pour recette préférée ou non ?>
 
       </div>
 

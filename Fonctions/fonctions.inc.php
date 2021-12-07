@@ -243,7 +243,7 @@ function getCoeurRecette(string $indice_recette, int $indentation): string
   $tabulation = str_repeat("\t", $indentation); // tabulation pour un meilleur rendu de code pour les pages avec cartes et recettes détaillées
 
   return '
-  '.$tabulation.'<svg id="'.$indice_recette.'" class="'.$favorie.'" >
+  '.$tabulation.'<svg class="'.$favorie.'" >
   '.$tabulation.'  <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
   '.$tabulation.'</svg>';
 }
@@ -262,7 +262,7 @@ function creerCarte(array $recette, array $Recettes): string
   $format = '
         <div class="card">
           <img class="card-img-top" src="'.$image.'" alt="Recette numéro '.$indice_recette.'">
-          <div class="svg-carte">'.$coeur.'
+          <div class="svg-carte" id="'.$indice_recette.'" >'.$coeur.'
           </div>
           <div class="card-body">
             <h5 class="card-title"><a href="index.php?page=recette&recette='.$indice_recette.'">'.$recette["titre"].'</a></h5>
