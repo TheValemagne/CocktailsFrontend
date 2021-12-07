@@ -5,7 +5,7 @@
             } else if(isset($_SESSION["login"])){ // sinon afficher le login
               echo $_SESSION["login"];
             } ?></li>
-            <li><a href="index.php?page=monProfil" class="btn btn-outline-dark" >Profil</a></li>
+            <li><a href="index.php?page=monProfil" class="btn btn-outline-dark <?php echo (isset($_GET['page']) && $_GET['page'] == 'monProfil') ? 'active' : ''; ?>" >Profil</a></li>
             <li>
               <form action="#" method="post" name="login">
                 <input type="submit" name="deconnexion" value="Se déconnecter" class="btn btn-outline-dark" />
@@ -16,7 +16,7 @@
             Login <input type="text" name="login" value="<?php isset($_POST["login"]) ? $_POST['login'] : ""; ?>" />
             Mot de passe <input type="password" name="password" value="<?php isset($_POST["password"]) ? $_POST['password'] : ""; ?>" />
             <input type="submit" name="connexion" value="Se connecter" class="btn btn-outline-dark" />
-            <a href="index.php?page=inscription" class="btn btn-outline-dark" >S'inscrire</a>
+            <a href="index.php?page=inscription" class="btn btn-outline-dark <?php echo (isset($_GET['page']) && $_GET['page'] == 'inscription') ? 'active' : ''; ?>" >S'inscrire</a>
           </form>
 
           <div><?php echo (isset($_POST['connexion']) && !$authentifie) ? "Login ou mot de passe invalide" : ""; ?></div>

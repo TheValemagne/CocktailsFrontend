@@ -35,12 +35,12 @@ $pages_non_authentifie = array("inscription", "navigation", "recette", "recettes
   <body>
   	<header>
       <ul>
-        <li><a href="index.php?page=navigation" class="btn btn-outline-dark">Navigation</a></li>
-        <li><a href="index.php?page=recettes" class="btn btn-outline-dark">Recettes ❤️</a></li>
+        <li><a href="index.php?page=navigation" class="btn btn-outline-dark <?php echo (!isset($_GET['page']) || (isset($_GET['page']) && $_GET['page'] == 'navigation')) ? 'active' : ''; ?>">Navigation</a></li>
+        <li><a href="index.php?page=recettes" class="btn btn-outline-dark <?php echo (isset($_GET['page']) && $_GET['page'] == 'recettes') ? 'active' : ''; ?>">Recettes ❤️</a></li>
         <li>
           <form action="index.php?page=recherche" method="post">
             Recherche : <input type="text" value='<?php echo isset($_POST["requette"]) ? $_POST["requette"] : "" ; ?>' name="requette"/>
-            <input type="submit" value="Rechercher" name="rechercher" class="btn btn-outline-dark" />
+            <input type="submit" value="Rechercher" name="rechercher" class="btn btn-outline-dark <?php echo (isset($_GET['page']) && $_GET['page'] == 'recherche') ? 'active' : ''; ?>" />
           </form>
         </li>
         <li>
