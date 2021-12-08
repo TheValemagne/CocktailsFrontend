@@ -29,6 +29,7 @@ $pages_non_authentifie = array("inscription", "navigation", "recette", "recettes
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="Fonctions/fonctions.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+    <link rel="icon" type="image/png" href="Photos/cocktail.png" />
   	<title>Cocktails <?php echo isset($_GET["page"]) ? $_GET["page"] : "" ?></title>
   </head>
 
