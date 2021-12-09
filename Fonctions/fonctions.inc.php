@@ -265,7 +265,7 @@ function creerCarte(array $recette, array $Recettes): string
           <div class="svg-carte" id="'.$indice_recette.'" >'.$coeur.'
           </div>
           <div class="card-body">
-            <h5 class="card-title"><a href="index.php?page=recette&recette='.$indice_recette.'">'.$recette["titre"].'</a></h5>
+            <h2 class="card-title"><a href="index.php?page=recette&recette='.$indice_recette.'">'.$recette["titre"].'</a></h2>
             <ul>';
 
   foreach($recette["index"] as $ingredient) {
