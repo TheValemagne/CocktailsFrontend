@@ -9,7 +9,7 @@ $replace = array('e', 'e', 'a', 'a', "c", "i", "i", "u", "u",  "",  "",  "");
 if(isset($_POST["inscription"]) ){ // vérification du formulaire d'inscription
   $utilisateurs_enregistrees = json_decode(file_get_contents("user.json"), true); // base de données avec les logins enregistres
 
-  if(!isset($_POST["login"]) || empty($_POST["login"]) || !ctype_alnum($_POST['login']) ){ // lettres non accentuées, minuscules ou majuscule et/ou chiffres
+  if(!isset($_POST["login"]) || empty(trim($_POST["login"])) || !ctype_alnum(trim($_POST['login'])) ){ // lettres non accentuées, minuscules ou majuscule et/ou chiffres
     array_push($erreurs_inscription, "login");
     array_push($erreurs_messages, "Le login est incorrect.");
   }
@@ -24,10 +24,10 @@ if(isset($_POST["inscription"]) ){ // vérification du formulaire d'inscription
 if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification du formulaire d'inscription et de modification de profil
 
   // champs obligatoires :
-  if(!isset($_POST["password"]) || empty($_POST["password"]) ){ // auncune contrainte particulière
+  if(!isset($_POST["password"]) || empty(trim($_POST["password"])) ){ // auncune contrainte particulière
     array_push($erreurs_inscription, "password");
     array_push($erreurs_messages, "Le mot de passe est invalide.");
-  } else if(isset($_POST["password"]) && !empty($_POST["password"])){
+  } else if(isset($_POST["password"]) && !empty(trim($_POST["password"]))){
     array_push($donnees_valides, "password");
   }
 
@@ -136,7 +136,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   }
 
   if(isset($_POST["telephone"]) && !empty($_POST["telephone"]) ){
-    $telephone = filter_var($_POST["telephone"], FILTER_SANITIZE_NUMBER_INT); // numéro limité aux numéros français standart : commence par 0 suivi de 9 chiffres
+    $telephone = filter_var(trim($_POST["telephone"]), FILTER_SANITIZE_NUMBER_INT); // numéro limité aux numéros français standart : commence par 0 suivi de 9 chiffres
 
     if(!ctype_digit($telephone) || strlen($telephone) != 10 || strpos($telephone, "0") != 0){ // le téléphone doit contenir 10 chiffres et commencer par 0
       array_push($erreurs_inscription, "telephone");
