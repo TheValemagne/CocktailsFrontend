@@ -2,8 +2,6 @@
       <h1>Formulaire d'inscription</h1>
 
 <?php if(sizeof($erreurs_inscription) > 0 || !isset($_POST["inscription"])) {
-    // TODO: modifier la class error pour mettre en rouge les bordures ou un effet meilleur qu'un backgroud: red
-    // TODO: focus d'un input avec une couleur grise + inputs alignés
     include("Pages/formulaire.inc.php");
 
 } else { // inscription réussie ?>
