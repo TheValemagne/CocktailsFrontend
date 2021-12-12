@@ -1,3 +1,2 @@
-# cocktails
-Git pour le projet en programmation web, Isfates
-a very successful project, for sure
+# important
+Veillez à ce que votre serveur web ait le droit de modifier le fichier "user.json".
