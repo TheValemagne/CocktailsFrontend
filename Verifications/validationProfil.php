@@ -10,7 +10,7 @@ if(sizeof($erreurs_inscription) === 0 && sizeof($donnees_valides) > 0 && isset($
 
   foreach ($donnee_utilisateurs[$_SESSION["login"]] as $donnee_utilisateur => $contenue_donnee) {
     // une donnée a été supprimer par l'utilisateur. L'utilisateur ne peut pas supprimer le mot de passe ou la liste de recettes.
-    if(!in_array($donnee_utilisateur, array("password", "recettes")) && (!isset($_POST[$donnee_utilisateur]) || empty($_POST[$donnee_utilisateur])) ){
+    if(!in_array($donnee_utilisateur, array("password", "recettes")) && (!isset($_POST[$donnee_utilisateur]) || empty(trim($_POST[$donnee_utilisateur]))) ){
       unset($donnee_utilisateurs[$_SESSION["login"]][$donnee_utilisateur]);
 
       if(isset($_SESSION[$donnee_utilisateur])){
