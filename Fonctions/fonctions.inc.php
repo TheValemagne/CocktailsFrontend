@@ -45,9 +45,10 @@ function setFilAliments(array $tableau_aliments): string
  *
  * @return bool le fil est valide ou non
  */
-function checkFilAliments(array $tableau_aliments, array $hierarchie): bool {
-    if(sizeof($tableau_aliments) === 0) {
-      return true;
+function checkFilAliments(array $tableau_aliments, array $hierarchie): bool
+{
+    if (sizeof($tableau_aliments) === 0) {
+        return true;
     }
 
     $super_categorie = urlToStr($tableau_aliments[0]);
@@ -110,24 +111,24 @@ function getIngredientsList(string $ingredient, array $Hierarchie): array
 }
 
 /**
- * Splits the search string into the wanted and unwanted ingredients
+ * Divise la chaîne de recherche en ingrédients désirés et non désirés
  *
- * @return array ['contains'=> [ingredients], 'notContains'=>[ingredients]]
- * @throws Exception if the search string is invalid
+ * @return array ['contains'=> [ingrédients], 'notContains'=>[ingrédients]]
+ * @throws Exception si la requête est invalide
  */
-function splitSearchString(string $search): array
+function splitRequete(string $requete): array
 {
-    if (empty($search)) {
+    if (empty($requete)) {
         throw new Exception("Recherche vide");
     }
 
-    if (substr_count($search, '"') % 2 != 0) {
+    if (substr_count($requete, '"') % 2 != 0) {
         throw new Exception("Nombre impaire de quotes");
     }
 
 
     $regExQuotes = "#([+-]?\"[^\"]+\")#";
-    preg_match_all($regExQuotes, $search, $matches);
+    preg_match_all($regExQuotes, $requete, $matches);
 
     $quotedMatches = [];
     if (isset($matches[1])) {
@@ -135,7 +136,7 @@ function splitSearchString(string $search): array
     }
 
 
-    $filtered = preg_replace($regExQuotes, "", $search);
+    $filtered = preg_replace($regExQuotes, "", $requete);
     $spaceMatches = filterMatches(explode(" ", $filtered));
 
 
@@ -149,13 +150,13 @@ function splitSearchString(string $search): array
 }
 
 /**
- * helper method for splitting the search string into wanted and unwanted ingredients
+ * Fonction auxiliaire pour la division de la requête
  *
- * @return array|array[] ['contains'=> [ingredients], 'notContains'=>[ingredients]]
+ * @return array|array[] ['contains'=> [ingrédients], 'notContains'=>[ingrédients]]
  */
 function filterMatches(array $matches): array
 {
-    $result = [
+    $resultat = [
         'contains' => [],
         'notContains' => []
     ];
@@ -168,19 +169,21 @@ function filterMatches(array $matches): array
         }
 
         if (strpos($match, "-") === 0) {
-            $result['notContains'][] = substr($match, 1);
+            $resultat['notContains'][] = substr($match, 1);
         } elseif (strpos($match, "+") === 0) {
-            $result['contains'][] = substr($match, 1);
+            $resultat['contains'][] = substr($match, 1);
         } else {
-            $result['contains'][] = $match;
+            $resultat['contains'][] = $match;
         }
     }
 
-    return $result;
+    return $resultat;
 }
 
 /**
- * @return bool returns true if the item is in the ingredient hierarchy
+ * Trouve un item dans la hiérarchie des aliments
+ *
+ * @return bool Retourne true si l'élément est dans la hiérarchie des ingrédients
  */
 function findInData(string $item, array $hierarchy): bool
 {
@@ -188,9 +191,11 @@ function findInData(string $item, array $hierarchy): bool
 }
 
 /**
- * @return array an array of recipes that satisfy at least one of the search criteria. Sorted by satisfaction score (in percent) in descending order
+ * Trouve des recettes en fonction des critères de recherche
+ *
+ * @return array Un tableau de recettes qui répondent à au moins un des critères de recherche. Triées par score de satisfaction (en pourcentage) en ordre décroissant
  */
-function findRecipies(array $wanted, array $unwanted, array $hierarchy, array $recipes): array
+function findRecipes(array $wanted, array $unwanted, array $hierarchy, array $recipes): array
 {
     $recipesSatisfyCriteria = [];
     foreach ($recipes as $recipe) {
@@ -201,13 +206,15 @@ function findRecipies(array $wanted, array $unwanted, array $hierarchy, array $r
         }
     }
 
-    array_multisort( array_column($recipesSatisfyCriteria, "satisfaction"), SORT_DESC, $recipesSatisfyCriteria ); // tri les recettes par satisfaction en ordre décroissant
+    array_multisort(array_column($recipesSatisfyCriteria, "satisfaction"), SORT_DESC, $recipesSatisfyCriteria); // tri les recettes par satisfaction en ordre décroissant
 
     return $recipesSatisfyCriteria;
 }
 
 /**
- * @return float|int the satisfaction score in percent (0-100)
+ * Calcule le score de satisfaction d'une recette en fonction de la requête
+ *
+ * @return float|int Le score de satisfaction en pourcentage [0,100]
  */
 function calculateRecipeSatisfaction(array $recipe, array $hierarchy, array $wanted, array $unwanted)
 {
@@ -216,16 +223,16 @@ function calculateRecipeSatisfaction(array $recipe, array $hierarchy, array $wan
     foreach ($wanted as $wantedIngredient) {
         $completeWanted = getIngredientsList($wantedIngredient, $hierarchy);
 
-        if(sizeof(array_intersect($completeWanted, $recipe['index'])) > 0){
-              $satisfiedCriteria++;
+        if (sizeof(array_intersect($completeWanted, $recipe['index'])) > 0) {
+            $satisfiedCriteria++;
         }
     }
 
     foreach ($unwanted as $unwantedIngredient) {
         $completeUnwanted = getIngredientsList($unwantedIngredient, $hierarchy);
 
-        if(sizeof(array_intersect($completeUnwanted, $recipe['index'])) == 0){
-              $satisfiedCriteria++;
+        if (sizeof(array_intersect($completeUnwanted, $recipe['index'])) == 0) {
+            $satisfiedCriteria++;
         }
     }
 
@@ -239,13 +246,13 @@ function calculateRecipeSatisfaction(array $recipe, array $hierarchy, array $wan
  */
 function getCoeurRecette(string $indice_recette, int $indentation): string
 {
-  $favorie = (isset($_SESSION['recettes']) && in_array($indice_recette, $_SESSION['recettes'])) ? "heart heartFilled" : "heart heartNotFilled";
-  $tabulation = str_repeat("\t", $indentation); // tabulation pour un meilleur rendu de code pour les pages avec cartes et recettes détaillées
+    $favorie = (isset($_SESSION['recettes']) && in_array($indice_recette, $_SESSION['recettes'])) ? "heart heartFilled" : "heart heartNotFilled";
+    $tabulation = str_repeat("\t", $indentation); // tabulation pour un meilleur rendu de code pour les pages avec cartes et recettes détaillées
 
-  return '
-  '.$tabulation.'<svg class="'.$favorie.'" >
-  '.$tabulation.'  <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
-  '.$tabulation.'</svg>';
+    return '
+  ' . $tabulation . '<svg class="' . $favorie . '" >
+  ' . $tabulation . '  <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+  ' . $tabulation . '</svg>';
 }
 
 /**
@@ -255,30 +262,30 @@ function getCoeurRecette(string $indice_recette, int $indentation): string
  */
 function creerCarte(array $recette, array $Recettes): string
 {
-  $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
-  $image = getImageSrc($Recettes[$indice_recette]['titre']); // image de la recette
-  $coeur = getCoeurRecette($indice_recette, 3); // coeur vide ou plein
+    $indice_recette = array_search($recette["titre"], array_column($Recettes, 'titre'));
+    $image = getImageSrc($Recettes[$indice_recette]['titre']); // image de la recette
+    $coeur = getCoeurRecette($indice_recette, 3); // coeur vide ou plein
 
-  $format = '
+    $format = '
         <div class="card">
-          <img class="card-img-top" src="'.$image.'" alt="Recette numéro '.$indice_recette.'">
-          <div class="svg-carte" id="'.$indice_recette.'" >'.$coeur.'
+          <img class="card-img-top" src="' . $image . '" alt="Recette numéro ' . $indice_recette . '">
+          <div class="svg-carte" id="' . $indice_recette . '" >' . $coeur . '
           </div>
           <div class="card-body">
-            <h2 class="card-title"><a href="index.php?page=recette&recette='.$indice_recette.'">'.$recette["titre"].'</a></h2>
+            <h2 class="card-title"><a href="index.php?page=recette&recette=' . $indice_recette . '">' . $recette["titre"] . '</a></h2>
             <ul>';
 
-  foreach($recette["index"] as $ingredient) {
-    $format.="
-              <li>".$ingredient."</li>";
-  }
+    foreach ($recette["index"] as $ingredient) {
+        $format .= "
+              <li>" . $ingredient . "</li>";
+    }
 
-  $format.="
+    $format .= "
             </ul>
           </div>
         </div>\n";
 
-  return $format;
+    return $format;
 }
 
 ?>
