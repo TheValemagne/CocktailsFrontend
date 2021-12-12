@@ -46,7 +46,7 @@
       </ul>
     <?php } ?></nav>
 
-    <main>
+    <main class="align">
       <h1>Liste des cocktails</h1>
 
       <div class="card-deck">

@@ -1,3 +1,18 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+		min-height: 100%;
+		min-width: 100%;
+}
+
+input:focus {
+	border-color: grey;
+	background: #D2CAEC;
+}
+
 .error {
 	background-color: red;
 }
@@ -39,13 +54,16 @@ nav ul    {
 }
 
 main {
-	background-color: #aaa;
 	margin-top: -1px;
-  margin-left:200px;
 	padding: 10px;
 	border-bottom: 0;
 	border-right: 0;
-	min-height:180px
+
+	background-color: #aaa;
+}
+
+.align {
+	margin-left: 200px;
 }
 
 table, tr, th, td{
@@ -105,11 +123,11 @@ nav ul li a:hover {
 	height: 160%;
 }
 
-.heartNotFilled{
+.heartNotFilled {
 	fill: grey;
 }
 
-.heartFilled{
+.heartFilled {
 	fill: red;
 }
 
