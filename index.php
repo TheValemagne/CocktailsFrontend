@@ -13,8 +13,8 @@ include("Verifications/validationProfil.php"); // met à jour la base de donnée
 // fonctions
 include("Fonctions/fonctions.inc.php"); // fichier de définition des fonctions
 
-$pages_authentifie = array("monProfil", "navigation", "recette", "recettes", "recherche"); // les pages autorisées pour un client connecté
-$pages_non_authentifie = array("inscription", "navigation", "recette", "recettes", "recherche"); // les pages autorisées pour un client non connecté
+$pages_authentifiees = array("monProfil", "navigation", "recette", "recettes", "recherche"); // les pages autorisées pour un client connecté
+$pages_non_authentifiees = array("inscription", "navigation", "recette", "recettes", "recherche"); // les pages autorisées pour un client non connecté
 ?>
 <!DOCTYPE html>
 
@@ -52,9 +52,9 @@ $pages_non_authentifie = array("inscription", "navigation", "recette", "recettes
 
 <?php
   if(isset($_GET["page"])) {
-    if($authentifie && in_array($_GET["page"], $pages_authentifie) ){ // utilisateur connecté
+    if($authentifie && in_array($_GET["page"], $pages_authentifiees) ){ // utilisateur connecté
       include("Pages/".$_GET["page"].".php");
-    } else if(!$authentifie && in_array($_GET["page"], $pages_non_authentifie) ){ // utilisateur non connecté
+    } else if(!$authentifie && in_array($_GET["page"], $pages_non_authentifiees) ){ // utilisateur non connecté
       include("Pages/".$_GET["page"].".php");
     } else { // page inexistante ou interdite
       include("Pages/404.html");
