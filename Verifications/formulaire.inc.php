@@ -138,7 +138,7 @@ if(isset($_POST["inscription"]) || isset($_POST["modifier"])) { // vérification
   if(isset($_POST["telephone"]) && !empty($_POST["telephone"]) ){
     $telephone = filter_var(trim($_POST["telephone"]), FILTER_SANITIZE_NUMBER_INT); // numéro limité aux numéros français standart : commence par 0 suivi de 9 chiffres
 
-    if(!ctype_digit($telephone) || strlen($telephone) != 10 || strpos($telephone, "0") != 0){ // le téléphone doit contenir 10 chiffres et commencer par 0
+    if(!preg_match('#^0[1-9][0-9]{8}$#', $telephone) || strlen(trim($_POST['telephone'])) != 10){ // le téléphone doit contenir 10 chiffres et commencer par 0
       array_push($erreurs_inscription, "telephone");
       array_push($erreurs_messages, "Le numéro de téléphone est incorrect.");
     } else {
